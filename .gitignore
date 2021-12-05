@@ -8,7 +8,8 @@
 
 #may be its a mistake
 /.vs
-
+/packages
+*.config
 # Build results
 
 [Dd]ebug/

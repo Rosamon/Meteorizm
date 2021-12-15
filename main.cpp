@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
-using namespace sf;//включаем пространство имен sf, чтобы постоянно не писать sf::
+
+using namespace sf;
 int main()
 {
 	//Создаём окно

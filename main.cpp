@@ -1,29 +1,19 @@
 #include <SFML/Graphics.hpp>
-
+#include <iostream>
+#include "Game.hpp"
+#include <windows.h>
 using namespace sf;
 int main()
 {
-	//Создаём окно
-	sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-	sf::RenderWindow window(sf::VideoMode(640, 480, desktop.bitsPerPixel), "Example");
-	Image heroimage; //создаем объект Image (изображение)
-	heroimage.loadFromFile("images/hero.png");//загружаем в него файл
-	Texture herotexture;//создаем объект Texture (текстура)
-	herotexture.loadFromImage(heroimage);//передаем в него объект Image (изображения)
-	Sprite herosprite;//создаем объект Sprite(спрайт)
-	herosprite.setTexture(herotexture);//передаём в него объект Texture (текстуры)
-	herosprite.setPosition(50, 25);//задаем начальные координаты появления спрайта
-	while (window.isOpen()) //Пока окно открыто
-	{
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
-		window.clear(); //Очищаем экран
-		window.draw(herosprite);//рисуем объект
-		window.display(); //Показываем объект на экране
-	}
+	 srand(time(NULL));
+    
+    Game game;
+    int a;
+    
+    game.createGameWindow();
+    game.createWindow();
+ 
+  
+   game.run();
 	return 0;
 }

@@ -5,7 +5,7 @@
 #include "ObjectBase.h"
 
 
-#define DEG2RAD 3.14159f / 180.0f
+#define DEG2RAD 3.14159f / 180.0f // перевод из градусов в радианы
 
 using namespace sf;//включаем пространство имен sf, чтобы постоянно не писать sf::
 
@@ -14,21 +14,20 @@ using namespace sf;//включаем пространство имен sf, чтобы постоянно не писать sf
 class Asteroid : public ObjectBase, public sf::Drawable, public sf::Transformable {
 
 public:
-    Asteroid() : ObjectBase() {};
-    Asteroid(int level);
-    Asteroid(Vector2f position, float angle, int level);
-    ~Asteroid();
-    bool isAlive();
-    int getLevel();
-    bool checkPoint(Vector2f point);
-    void breakDown();
-    void update(float frametime);
-    void draw(RenderTarget& target, RenderStates states) const;
+    Asteroid() : ObjectBase() {}; // наследуем конструктор базового класса
+    Asteroid(int level); // конструктор с параметром "уровень"
+    Asteroid(Vector2f position, float angle, int level); // конструктор с параметрами "позиция", "угол" - для направления, "уровень"
+    ~Asteroid(); // деструктор 
+    bool isAlive(); // проверка на существование
+    int getLevel(); // возвращает уровень астероида
+    bool checkPoint(Vector2f point); // проверка на касание границ окна игры
+    void breakDown(); // функция-разрушение астероида
+    void update(); // функция, обновляющая астероид в окне
 
 private:
-    int level;
-    bool is_Alive;
-    Vector2f direction;
-    CircleShape shape;
+    int level; // уровень астероида
+    bool is_Alive; // состояние астероида
+    Vector2f direction; // направление астероида
+    CircleShape shape; // форма для астероида
 };
 #endif

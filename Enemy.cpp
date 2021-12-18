@@ -2,26 +2,30 @@
 
 // 1, 2, 3
 Enemy::Enemy(int position):
-isAlive(true)
+alive(true)
 {
-	swich (position)
+	switch (position)
 	{
-		case 1:
-			sf::Vector2f position_UFO(50, 50);
-			brake;
+		case 3:
+			position_UFO.x = 100;
+			position_UFO.y = 100;
+			break;
 		case 2:
-			sf::Vector2f position_UFO(300, 50);
-			brake;
+			position_UFO.x = 300;
+			position_UFO.y = 100;
+			break;
 		default:
-			sf::Vector2f position_UFO(500,50);
-			brake;
+			position_UFO.x = 500;
+			position_UFO.y = 100;
+			break;
 	}
 
 	enemyUFOsprite.setPosition(position_UFO);
 	level = 3;
-	Texture enemytexture.loadFromFile("images/Kursa4.png");
+	
+	enemytexture.loadFromFile("Kursa4.png");
 	enemyUFOsprite.setTexture(enemytexture);
-	enemyUFOsprite.setTextureRect(IntRect(416, 45, 73, 48));
+	enemyUFOsprite.setTextureRect(sf::IntRect(416, 45, 73, 48));
 }
 
 void Enemy::punched()

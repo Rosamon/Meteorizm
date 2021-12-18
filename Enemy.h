@@ -24,4 +24,5 @@ private:
     sf::Vector2f direction; // (-1;0) || (1;0)
     sf::Vector2f position_UFO;
     Sprite enemyUFOsprite;
+    sf::Texture enemytexture;
 };

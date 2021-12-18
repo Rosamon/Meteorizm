@@ -69,12 +69,12 @@ void Asteroid::breakDown() {
     switch (level)
     {
     case 1: {
-         Sprite AsterSprite(AsteroidTexture, IntRect(128, 38, 75, 75)); // коцаный
-    },
+        Sprite AsterSprite(AsteroidTexture, IntRect(128, 38, 75, 75)); // коцаный
+    }
     case 2: {
         Sprite AsterSprite(AsteroidTexture, IntRect(58, 155, 36, 36)); // предсмертный
     }
-    }
+    };
 
     float angle = 90 % 360;
     direction = sf::Vector2f(cos(angle * DEG2RAD), sin(angle * DEG2RAD));

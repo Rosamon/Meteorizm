@@ -82,7 +82,7 @@ int main()
     RenderWindow window(VideoMode(400, 800), "ship");
 
 
-    SpaceShip first("ship.png", 175, 720, 45, 73);
+    SpaceShip first("Kursa4.png", 175, 720, 45, 73);
 
 
     Clock clock;

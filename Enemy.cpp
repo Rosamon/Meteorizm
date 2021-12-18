@@ -6,6 +6,7 @@ isAlive(true)
 	enemyUFOsprite.setPosition(position);
 	level = 3;
 }
+
 void Enemy::punched()
 {
 	if (ishit)
@@ -18,4 +19,9 @@ void Enemy::punched()
 	{
 		enemyUFOsprite.setColor(Color::White);
 	}
+}
+
+void Enemy::aim()
+{
+	//
 }

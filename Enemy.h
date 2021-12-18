@@ -11,6 +11,10 @@ public:
     bool checkPoint(sf::Vector2f point);
     void update(float frametime);
     void draw(sf::RenderTarget& target, sf::RenderStates states);
+    void aim(sf::Vector2f position); // направляет пулю в сторону ракеты, принимает его координаты, возвращает указатель на созданный класс
+    //раз в 3 секунды стрляет time % 3000
+    list <Bullet> shrapnel();// выпускает несколько снарядов под разным углом вниз
+    //
     bool isAlive(){return alive;};
     int getLevel(){return level;};
 private:

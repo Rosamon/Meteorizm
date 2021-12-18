@@ -21,7 +21,7 @@ alive(true)
 	}
 
 	enemyUFOsprite.setPosition(position_UFO);
-	level = 3;
+	level = 4;
 	
 	enemytexture.loadFromFile("Kursa4.png");
 	enemyUFOsprite.setTexture(enemytexture);
@@ -30,6 +30,10 @@ alive(true)
 
 void Enemy::punched()
 {
+	if (level == 0)
+	{
+		alive = false;
+	}
 	if (ishit)
 	{
 		enemyUFOsprite.setColor(Color::Red);
@@ -44,19 +48,24 @@ void Enemy::punched()
 
 Bullet Enemy::aim(sf::Vector2f position)
 {
-	Bullet enemyBullet(position_UFO, 270 * 3.14159f / 180.0f);
+	sf::Vector2f gunPosition = position_UFO;
+	gunPosition.x += 40;
+	gunPosition.y += 40;
+	sf::Vector2f vec = position - gunPosition;// вектор в направлении героя
+	Bullet enemyBullet(gunPosition, atan2(vec.y, vec.x)*180/3.14159, true);
 	return enemyBullet;
+}
 
 
-bool Enemy::move(float frametime)
+bool Enemy::moved(float frametime)
 {
 	//
 	sf::Vector2f position = enemyUFOsprite.getposition();
-	if (position_UFO.x >= 500)
+	if (position_UFO.x >= 499)
 	{
 		direction.x = -1;
 	}
-	if (position_UFO.x <= 50)
+	if (position_UFO.x <= 51)
 	{
 		direction.x = 1;
 	}
@@ -76,15 +85,44 @@ bool Enemy::move(float frametime)
 	sf::Vector2f distance = direction * 0.1 * frametime;
     enemyUFOsprite.move(distance);
     position_UFO += distance;
-    if (trunc(position_UFO.x) >= 500 || trunc(position_UFO.x) == 299 || trunc(position_UFO.x) == 300 || trunc(position_UFO.x) == 50)
-    {
-    	direction.x = 0;
-    	return false;
-    }
     return true;
 }
 
 void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(enemyUFOsprite);
+}
+
+void Enemy::update(float frametime)
+{
+	punched();
+	moved(frametime);
+	switch (level)
+	{
+	case 0:
+		enemyUFOsprite.setTextureRect(sf::IntRect(107, 122, 96, 95));
+		break; 
+	case 1:
+		enemyUFOsprite.setTextureRect(sf::IntRect(515, 45, 70, 47));
+		break;
+	case 2:
+		enemyUFOsprite.setTextureRect(sf::IntRect(608, 47, 72, 47));
+		//
+		break;
+	default:
+		break;
+	}
+}
+
+bool Enemy::checkPoint(sf::Vector2f point) {
+	float ax = position_UFO.x + 40;
+	float ay = position_UFO.y + 40;
+
+	float px = point.x;
+	float py = point.y;
+
+	float sqrDistance = ((ax - point.x)*(ax - point.x)) + ((ay - point.y) * (ay - point.y));
+	float sqrRadius = 25*25;
+
+	return (sqrDistance <= sqrRadius);
 }

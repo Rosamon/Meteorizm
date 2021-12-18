@@ -28,6 +28,7 @@ private:
     int level; // уровень астероида
     bool is_Alive; // состояние астероида
     Vector2f direction; // направление астероида
-    CircleShape shape; // форма для астероида
+    Sprite AsterSprite; // спрайт для астероида
+    Texture AsteroidTexture; // текстура для астероида
 };
 #endif

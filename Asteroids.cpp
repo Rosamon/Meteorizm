@@ -1,29 +1,24 @@
 #include "Asteroids.h"
 
+Asteroid::Asteroid(int level) : is_Alive(true), level(level) {
+     //СЃРєРѕСЂРѕСЃС‚Рё Рё СЂР°Р·РјРµСЂС‹ РђСЃС‚РµСЂРѕРёРґР°
+     float speed[3] = { 0.03f, 0.05f, 0.07f };
+     int radius[3] = { 37.5, 37.5, 18};
 
- Asteroid::Asteroid(int level) : is_Alive(true), level(level) {
-    int angle = 270 % 360; // угол в 270 градусов, задаем направление строго вниз
+     Image AsterImage;
+     AsterImage.loadFromFile("images/Kursa4.png");
+     AsteroidTexture.loadFromImage(AsterImage);
+     AsterSprite = Sprite(AsteroidTexture, IntRect(38, 38, 75, 75)); // С†РµР»С‹Р№
+     AsterSprite.setOrigin(radius[level], radius[level]);
+    
+    int angle = 270 % 360; // СѓРіРѕР» РІ 270 РіСЂР°РґСѓСЃРѕРІ, Р·Р°РґР°РµРј РЅР°РїСЂР°РІР»РµРЅРёРµ СЃС‚СЂРѕРіРѕ РІРЅРёР·
     direction = Vector2f(cos(angle * DEG2RAD), sin(angle * DEG2RAD));
 
-    int x = rand() % 400; // 400 - предполагаемая ширина окна
-    int y = rand() % 100; // 100 - первые сто px сверху окна
-
-    //скорости и размеры Астероида
-    float speed[3] = { 0.03f, 0.05f, 0.07f };
-    int radius[3] = { 75, 75, 36 };
+    int x = radius[level] + rand() % (800 - radius[level]); // 800 - РїСЂРµРґРїРѕР»Р°РіР°РµРјР°СЏ С€РёСЂРёРЅР° РѕРєРЅР°
+    int y = radius[level] + rand() % 100; // 100 - РїРµСЂРІС‹Рµ СЃС‚Рѕ px СЃРІРµСЂС…Сѓ РѕРєРЅР°
 
     Vector2f position(x, y);
-    setPosition(position);
-
-
-  
-
-
-    Image AsterImage;
-    AsterImage.loadFromFile("images/Kursa4.png");
-    Texture AsteroidTexture;
-    AsteroidTexture.loadFromImage(AsterImage);
-    Sprite AsterSprite(AsteroidTexture, IntRect(38, 38, 75, 75)); // целый
+    setPosition(position);    
     
 }
 
@@ -31,14 +26,7 @@
 Asteroid::~Asteroid() {
 }
 
-bool Asteroid::isAlive() {
-    return is_Alive;
-}
 
-
-int Asteroid::getLevel() {
-    return level;
-} 
 
 bool Asteroid::checkPoint(sf::Vector2f point) {
     float ax = getPosition().x;
@@ -47,11 +35,21 @@ bool Asteroid::checkPoint(sf::Vector2f point) {
     float px = point.x;
     float py = point.y;
 
-    int radius[3] = { 75, 75, 36 };
+    int radius[3] = { 37.5, 37.5, 18 };
     float sqrDistance = ((ax - px) * (ax - px)) + ((ay - py) * (ay - py));
     float sqrRadius = radius[level] * radius[level];
 
     return (sqrDistance <= sqrRadius);
+}
+
+
+
+bool Asteroid::isAlive() {
+    return is_Alive;
+}
+
+int Asteroid::getLevel() {
+    return level;
 }
 
 
@@ -62,17 +60,19 @@ void Asteroid::breakDown() {
         is_Alive = false;
         return;
     }
-    //здесь меняем картинки и радиус
-    int radius[3] = { 75, 75, 36 };
-    shape.setRadius(radius[level]);
-    shape.setOrigin(radius[level], radius[level]);
+    //Р·РґРµСЃСЊ РјРµРЅСЏРµРј РєР°СЂС‚РёРЅРєРё Рё СЂР°РґРёСѓСЃ
+    int radius[3] = { 37.5, 37.5, 18 };
     switch (level)
     {
     case 1: {
-        Sprite AsterSprite(AsteroidTexture, IntRect(128, 38, 75, 75)); // коцаный
+        AsterSprite = Sprite(AsteroidTexture, IntRect(128, 38, 75, 75)); // РєРѕС†Р°РЅС‹Р№
+        AsterSprite.setOrigin(radius[level], radius[level]);
+        break;
     }
     case 2: {
-        Sprite AsterSprite(AsteroidTexture, IntRect(58, 155, 36, 36)); // предсмертный
+        AsterSprite = Sprite(AsteroidTexture, IntRect(58, 155, 36, 36)); // РїСЂРµРґСЃРјРµСЂС‚РЅС‹Р№
+        AsterSprite.setOrigin(radius[level], radius[level]);
+        break;
     }
     };
 
@@ -83,13 +83,16 @@ void Asteroid::breakDown() {
 void Asteroid::update() {
     if (!is_Alive) return;
 
-    sf::Vector2f distance = direction * speed[level] * 60;
+    AsterSprite.rotate(15);
+
+    float speed[3] = { 0.03f, 0.05f, 0.07f };
+    sf::Vector2f distance = direction * speed[level] * 60.0f;
     move(distance);
 
     sf::Vector2f position = getPosition();
-    int radius[3] = { 75, 75, 36 };
-    //здесь 800 - высота окна
-    if (position.y > (800 - radius[level])) {
+    int radius[3] = { 37.5, 37.5, 18 };
+    //Р·РґРµСЃСЊ 600 - РІС‹СЃРѕС‚Р° РѕРєРЅР°
+    if (position.y > (600 - radius[level])) {
         delete this;
     }
     setPosition(position);

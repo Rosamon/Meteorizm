@@ -12,7 +12,7 @@ public:
     void update(float frametime);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     bool moved(float frametime);// определяет в движении ли объект
-    void aim(sf::Vector2f position); // направляет пулю в сторону ракеты, принимает его координаты, возвращает указатель на созданный класс
+    Bullet aim(sf::Vector2f position); // направляет пулю в сторону ракеты, принимает его координаты, возвращает указатель на созданный класс
     //раз в 3 секунды стрляет time % 3000
     //list <Bullet> shrapnel();// выпускает несколько снарядов под разным углом вниз
     //
@@ -22,5 +22,6 @@ private:
 	int level;
     bool alive, ishit;
     sf::Vector2f direction; // (-1;0) || (1;0)
+    sf::Vector2f position_UFO;
     Sprite enemyUFOsprite;
 };

@@ -38,10 +38,11 @@ void Enemy::punched()
 	}
 }
 
-void Enemy::aim(sf::Vector2f position)
+Bullet Enemy::aim(sf::Vector2f position)
 {
-	//
-}
+	Bullet enemyBullet(position_UFO, 270 * 3.14159f / 180.0f);
+	return enemyBullet;
+
 
 bool Enemy::move(float frametime)
 {

@@ -68,4 +68,73 @@ public:
         }
 
     }
+    //float getShipCoordX() {
+  //    return x;
+  //}
+  //float getShipCoordY() {
+  //    return y;
+  //}
+
+
+};
+int main()
+{
+    RenderWindow window(VideoMode(400, 800), "ship");
+
+
+    SpaceShip first("ship.png", 175, 720, 45, 73);
+
+
+    Clock clock;
+
+    while (window.isOpen())
+    {
+        float time = clock.getElapsedTime().asMicroseconds();
+        clock.restart();
+        time = time / 800;
+        Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == Event::Closed)
+                window.close();
+        }
+        if ((Keyboard::isKeyPressed(Keyboard::Left) || (Keyboard::isKeyPressed(Keyboard::A)))) {
+
+            first.dir = 1; first.speed = 0.2;//dir =1 - направление вверх, speed =0.1 - скорость движения.
+            first.sprite.setTextureRect(IntRect(319, 155, 68, 66));
+        }
+        //if ((Keyboard::isKeyPressed(Keyboard::A) && (Keyboard::isKeyPressed(Keyboard::W)))) {
+
+        //    first.dir = 4; first.speed = 0.1;//dir =1 - направление вверх, speed =0.1 - скорость движения. 
+        //    first.sprite.setTextureRect(IntRect(319, 155, 68, 66));
+        //}
+        //if ((Keyboard::isKeyPressed(Keyboard::D) && (Keyboard::isKeyPressed(Keyboard::W)))) {
+        //    first.dir = 5; first.speed = 0.1;//направление вправо, см выше
+        //    first.sprite.setTextureRect(IntRect(307, 45, 68, 66));
+        //}
+
+        if ((Keyboard::isKeyPressed(Keyboard::Right) || (Keyboard::isKeyPressed(Keyboard::D)))) {
+            first.dir = 0; first.speed = 0.2;//направление вправо, см выше
+            first.sprite.setTextureRect(IntRect(307, 45, 68, 66));
+        }
+
+        if ((Keyboard::isKeyPressed(Keyboard::Up) || (Keyboard::isKeyPressed(Keyboard::W)))) {
+            first.dir = 3; first.speed = 0.2;//направление вниз, см выше
+            first.sprite.setTextureRect(IntRect(238, 38, 45, 73));
+        }
+
+        if ((Keyboard::isKeyPressed(Keyboard::Down) || (Keyboard::isKeyPressed(Keyboard::S)))) { //если нажата клавиша стрелка влево или англ буква А
+            first.dir = 2; first.speed = 0.2;//направление вверх, см выше
+            first.sprite.setTextureRect(IntRect(238, 38, 45, 73));
+        }
+
+        first.update(time);
+        window.clear();
+        window.draw(first.sprite);
+        window.display();
+
+
+    }
+    return 0;
+}
 };

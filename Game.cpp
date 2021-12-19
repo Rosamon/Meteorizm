@@ -13,6 +13,7 @@ Game::~Game() {
 
 int Game::run() {
     createWindow();
+    sf::Clock my_timer;// РґР»СЏ РєРѕРЅС‚СЂРѕР»СЏ РґРµР№СЃС‚РІРёР№ С‚Р°СЂРµР»РєРё
     Level level;
     sf::Clock clock;
 
@@ -29,7 +30,12 @@ int Game::run() {
         }
 
         window.clear();
-        level.update(clock.restart().asMilliseconds());
+        int buff = my_timer.getElapsedTime().asMilliseconds();// 
+        level.update(clock.restart().asMilliseconds(), buff);
+        if (buff >= 6030)
+        {
+            my_timer.restart();// РџРµСЂРµР·Р°РїСѓСЃРє С‚Р°Р№РјРµСЂР° РґР»СЏ С‚Р°СЂРµР»РєРё
+        }
         level.show(window);
         window.display();
     }
@@ -46,7 +52,7 @@ void Game::createGameWindow() {
     Sprite GamePic,StartSprite,ExitSprite;
     bool isMenu = 1;
     int menuNum = 0;
-    GamePic.setTexture(Texture_Start);//передаём в него объект Texture (текстуры)
+    GamePic.setTexture(Texture_Start);//ГЇГҐГ°ГҐГ¤Г ВёГ¬ Гў Г­ГҐГЈГ® Г®ГЎГєГҐГЄГІ Texture (ГІГҐГЄГ±ГІГіГ°Г»)
     StartSprite.setTexture(button_start);
     ExitSprite.setTexture(button_exit);
     StartSprite.setPosition(100, 300);
@@ -62,7 +68,7 @@ void Game::createGameWindow() {
 
         if (Mouse::isButtonPressed(Mouse::Left))
         {
-            if (menuNum == 2) { window.close(); system("exit"); };//если нажали первую кнопку, то выходим из меню 
+            if (menuNum == 2) { window.close(); system("exit"); };//ГҐГ±Г«ГЁ Г­Г Г¦Г Г«ГЁ ГЇГҐГ°ГўГіГѕ ГЄГ­Г®ГЇГЄГі, ГІГ® ГўГ»ГµГ®Г¤ГЁГ¬ ГЁГ§ Г¬ГҐГ­Гѕ 
             if (menuNum == 1) { window.clear(Color::Black); isMenu = false; }
             if (Keyboard::isKeyPressed(sf::Keyboard::Escape)) { window.close(); system("exit"); }
         
@@ -75,7 +81,7 @@ void Game::createGameWindow() {
 
         window.display();
     }
-    // Отрисовка окна
+    // ГЋГІГ°ГЁГ±Г®ГўГЄГ  Г®ГЄГ­Г 
     
     
 }

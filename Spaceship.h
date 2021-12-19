@@ -7,6 +7,9 @@
 using namespace sf;
 class Spaceship: public sf::Drawable, public sf::Transformable {
 
+    public:
+        Spaceship();
+        ~Spaceship();
 
 
 

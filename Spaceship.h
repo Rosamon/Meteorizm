@@ -16,6 +16,12 @@ class Spaceship: public sf::Drawable, public sf::Transformable {
         Image image;//изображение
         Texture texture;// текстура
         Sprite sprite;// спрайт
+         void reset();
+        void update(float time);
+        void interactionWithMap();
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        void onEvent(const sf::Event& event);
+
 
 };
 #endif

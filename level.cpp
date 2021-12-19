@@ -18,8 +18,29 @@ void Level::onEvent(const sf::Event& event) {
         bullets.push_back(bullet);
     }
 }
-void Level::update(float frametime) {
+void Level::update(float frametime, int my_timer) {
     ship.update(frametime);
+    if (UFO != nullptr)
+    {
+        UFO->update(frametime);
+    }
+    /////////////////
+    if ((my_timer % 300) == 0 && UFO != nullptr && UFO->isAlive())///////////////
+    {
+        bullets.push_back(UFO->aim(ship.getPosition()));/////////////
+       
+    }
+    if ((my_timer % 3000 == 0) && UFO == nullptr)
+    {
+        UFO = new Enemy(2);  
+    }
+    if (UFO != nullptr && !UFO->isAlive())
+    {
+        delete UFO;
+        UFO = nullptr;
+    }
+    //Работа класса enemy
+    ////////////////
     std::vector<Bullet>::iterator start_bullets = bullets.begin();
     while (start_bullets != bullets.end()) {
         if (start_bullets->isAlive()) {
@@ -60,6 +81,14 @@ void Level::update(float frametime) {
                     new_asteroids.push_back(a);
                 }
                 break;
+                ////
+                if (UFO != nullptr && !start_bullets->isItEnemy() && UFO->checkPoint(start_bullets->getPosition()))///////////////
+                {
+                    UFO->punch(true);
+                    start_bullets->kill();
+                }
+                // Взаимодействие с тарелкой
+                ////////////////
             }
             ++start_bullets;
         }
@@ -71,6 +100,14 @@ void Level::update(float frametime) {
 void Level::show(sf::RenderTarget& target) {
     target.draw(ship);
 
+    //
+    if (UFO != nullptr && UFO->isAlive())
+    {
+        sf::RenderStates states;
+           UFO->draw(target, states);
+    }
+    // Отрисовка тарелки
+    ///////////
     for(std::vector<Bullet>::iterator it = bullets.begin(); it != bullets.end(); ++it)
         target.draw(*it);
 

@@ -8,15 +8,15 @@ alive(true)
 	{
 		case 3:
 			position_UFO.x = 100;
-			position_UFO.y = 100;
+			position_UFO.y = 50;
 			break;
 		case 2:
-			position_UFO.x = 300;
-			position_UFO.y = 100;
+			position_UFO.x = 400;
+			position_UFO.y = 50;
 			break;
 		default:
-			position_UFO.x = 500;
-			position_UFO.y = 100;
+			position_UFO.x = 900; // c учетом того что поле в ширину 1000
+			position_UFO.y = 50;
 			break;
 	}
 
@@ -25,24 +25,29 @@ alive(true)
 	
 	enemytexture.loadFromFile("Kursa4.png");
 	enemyUFOsprite.setTexture(enemytexture);
-	enemyUFOsprite.setTextureRect(sf::IntRect(416, 45, 73, 48));
+	enemyUFOsprite.setTextureRect(sf::IntRect(416, 45, 70, 47));
 }
 
 void Enemy::punched()
 {
-	if (level == 0)
-	{
-		alive = false;
-	}
+	
 	if (ishit)
 	{
 		enemyUFOsprite.setColor(Color::Red);
 		level--;
+		if (level < 0)
+		{
+			level = 0;
+		}
 		ishit = false;
 	}
 	else
 	{
 		enemyUFOsprite.setColor(Color::White);
+	}
+	if (level == 0)
+	{
+		alive = false;
 	}
 }
 
@@ -61,7 +66,7 @@ bool Enemy::moved(float frametime)
 {
 	//
 	sf::Vector2f position = enemyUFOsprite.getposition();
-	if (position_UFO.x >= 499)
+	if (position_UFO.x >= 899)
 	{
 		direction.x = -1;
 	}
@@ -69,7 +74,7 @@ bool Enemy::moved(float frametime)
 	{
 		direction.x = 1;
 	}
-	if (trunc(position_UFO.x) == 299 || trunc(position_UFO.x) == 300)
+	if (trunc(position_UFO.x) == 399 || trunc(position_UFO.x) == 400)
 	{
 		short buff = 0;
 		buff = rand() % 2;
@@ -95,34 +100,41 @@ void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Enemy::update(float frametime)
 {
-	punched();
-	moved(frametime);
-	switch (level)
+	if (this != nullptr)
 	{
-	case 0:
-		enemyUFOsprite.setTextureRect(sf::IntRect(107, 122, 96, 95));
-		break; 
-	case 1:
-		enemyUFOsprite.setTextureRect(sf::IntRect(515, 45, 70, 47));
-		break;
-	case 2:
-		enemyUFOsprite.setTextureRect(sf::IntRect(608, 47, 72, 47));
-		//
-		break;
-	default:
-		break;
+		punched();
+		moved(frametime);
+		switch (level)
+		{
+		case 0:
+			enemyUFOsprite.setTextureRect(sf::IntRect(107, 122, 96, 95));
+			break; 
+		case 1:
+			enemyUFOsprite.setTextureRect(sf::IntRect(515, 45, 70, 47));
+			break;
+		case 2:
+			enemyUFOsprite.setTextureRect(sf::IntRect(608, 45, 70, 47));
+			//
+			break;
+		default:
+			break;
+		}
 	}
 }
 
 bool Enemy::checkPoint(sf::Vector2f point) {
-	float ax = position_UFO.x + 40;
-	float ay = position_UFO.y + 40;
+	if (this != nullptr)
+	{
+		float ax = position_UFO.x + 40;
+		float ay = position_UFO.y + 40;
 
-	float px = point.x;
-	float py = point.y;
+		float px = point.x;
+		float py = point.y;
 
-	float sqrDistance = ((ax - point.x)*(ax - point.x)) + ((ay - point.y) * (ay - point.y));
-	float sqrRadius = 25*25;
+		float sqrDistance = ((ax - point.x)*(ax - point.x)) + ((ay - point.y) * (ay - point.y));
+		float sqrRadius = 25*25;
 
-	return (sqrDistance <= sqrRadius);
+		return (sqrDistance <= sqrRadius);
+	}
+	return false;
 }

@@ -4,8 +4,9 @@
 #include <SFML/Graphics.hpp>
 #include "ObjectBase.h"
 
-
+#ifndef DEG2RAD
 #define DEG2RAD 3.14159f / 180.0f // перевод из градусов в радианы
+#endif // !DEG2RAD
 
 using namespace sf;//включаем пространство имен sf, чтобы посто€нно не писать sf::
 
@@ -23,7 +24,9 @@ public:
     bool checkPoint(Vector2f point); // проверка на касание границ окна игры
     void breakDown(); // функци€-разрушение астероида
     void update(); // функци€, обновл€юща€ астероид в окне
-
+    //////
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    //////
 private:
     int level; // уровень астероида
     bool is_Alive; // состо€ние астероида

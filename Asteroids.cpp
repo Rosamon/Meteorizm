@@ -97,3 +97,8 @@ void Asteroid::update() {
     }
     setPosition(position);
 }
+
+void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    target.draw(AsterSprite);
+}

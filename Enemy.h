@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
-
+#include "Bullet.hpp"
+#include "ObjectBase.h"
 class Enemy: public ObjectBase, public sf::Drawable, public sf::Transformable
 {
 public:
@@ -21,6 +22,6 @@ private:
     bool alive, ishit;
     sf::Vector2f direction; // (-1;0) || (1;0)
     sf::Vector2f position_UFO;
-    Sprite enemyUFOsprite;
+    sf::Sprite enemyUFOsprite;
     sf::Texture enemytexture;
 };

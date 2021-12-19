@@ -1,4 +1,7 @@
 #include "Bullet.hpp"
+#ifndef DEG2RAD
+#define DEG2RAD 3.14159f / 180.0f
+#endif // !DEG2RAD
 
 sf::Texture bulletTexture;
 Bullet::Bullet(sf::Vector2f position, float angle, bool isenemy):

@@ -1,20 +1,34 @@
 #ifndef _ASTEROIDS_H_
 #define _ASTEROIDS_H_
 
+#include <SFML/Graphics.hpp>
+#include "ObjectBase.h"
+
+
+#define DEG2RAD 3.14159f / 180.0f // перевод из градусов в радианы
+
+using namespace sf;//включаем пространство имен sf, чтобы постоянно не писать sf::
+
 
 // интерфейс класса Asteroid
-class Asteroid{
+class Asteroid : public ObjectBase, public sf::Drawable, public sf::Transformable {
 
 public:
-    Asteroid(int level);
-    ~Asteroid();
-
-    int getLvl(); // получить значение уровня
-    bool isAlive(); // получить состояние астероида
-    void breakDown(); // действие при попадании в астероид
+    Asteroid() : ObjectBase() {}; // наследуем конструктор базового класса
+    Asteroid(int level); // конструктор с параметром "уровень"
+    Asteroid(Vector2f position, float angle, int level); // конструктор с параметрами "позиция", "угол" - для направления, "уровень"
+    ~Asteroid(); // деструктор 
+    bool isAlive(); // проверка на существование
+    int getLevel(); // возвращает уровень астероида
+    bool checkPoint(Vector2f point); // проверка на касание границ окна игры
+    void breakDown(); // функция-разрушение астероида
+    void update(); // функция, обновляющая астероид в окне
 
 private:
-    int lvl; // значение уровня 
-    bool isAlive; // состояние астероида
+    int level; // уровень астероида
+    bool is_Alive; // состояние астероида
+    Vector2f direction; // направление астероида
+    Sprite AsterSprite; // спрайт для астероида
+    Texture AsteroidTexture; // текстура для астероида
 };
 #endif

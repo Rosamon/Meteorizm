@@ -1,6 +1,5 @@
 #include "Game.h"
-#include "Level.hpp"
-#include "Constants.hpp"
+#include "Level.h"
 
 using namespace sf;
 Game::Game():
@@ -24,6 +23,17 @@ int Game::run() {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) { window.close(); }
             if (event.type == sf::Event::Closed) {
                 window.close();
+				window.create(sf::VideoMode(APP_WIDTH, APP_HEIGHT), "GameOver", sf::Style::Close);
+                window.setKeyRepeatEnabled(true);
+                window.setFramerateLimit(APP_FPS);
+                Texture Texture_End;
+                Texture_End.loadFromFile("images\\GameOver.png");
+                Sprite GameEnd;
+                GameEnd.setTexture(Texture_End);//передаём в него объект Texture (текстуры)
+                window.draw(GameEnd);
+                window.display();
+                Sleep(5000);
+                return EXIT_SUCCESS;
                 return EXIT_SUCCESS;
             }
             level.onEvent(event);

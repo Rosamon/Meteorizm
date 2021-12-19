@@ -1,5 +1,9 @@
 #ifndef _GAME_HPP_
 #define _GAME_HPP_
+#define APP_FPS 60
+#define APP_WIDTH 1000
+#define APP_HEIGHT 1000
+#define APP_TITLE "Roma Rat Rider"
 
 #include <SFML/Graphics.hpp>
 

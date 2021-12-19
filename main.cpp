@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "Game.hpp"
+#include "Game.h"
 #include <windows.h>
 using namespace sf;
 int main()

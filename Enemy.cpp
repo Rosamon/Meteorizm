@@ -8,15 +8,15 @@ alive(true)
 	{
 		case 3:
 			position_UFO.x = 100;
-			position_UFO.y = 100;
+			position_UFO.y = 50;
 			break;
 		case 2:
-			position_UFO.x = 300;
-			position_UFO.y = 100;
+			position_UFO.x = 400;
+			position_UFO.y = 50;
 			break;
 		default:
-			position_UFO.x = 500;
-			position_UFO.y = 100;
+			position_UFO.x = 900; // c учетом того что поле в ширину 1000
+			position_UFO.y = 50;
 			break;
 	}
 
@@ -25,7 +25,7 @@ alive(true)
 	
 	enemytexture.loadFromFile("Kursa4.png");
 	enemyUFOsprite.setTexture(enemytexture);
-	enemyUFOsprite.setTextureRect(sf::IntRect(416, 45, 73, 48));
+	enemyUFOsprite.setTextureRect(sf::IntRect(416, 45, 70, 47));
 }
 
 void Enemy::punched()
@@ -106,7 +106,7 @@ void Enemy::update(float frametime)
 		enemyUFOsprite.setTextureRect(sf::IntRect(515, 45, 70, 47));
 		break;
 	case 2:
-		enemyUFOsprite.setTextureRect(sf::IntRect(608, 47, 72, 47));
+		enemyUFOsprite.setTextureRect(sf::IntRect(608, 45, 70, 47));
 		//
 		break;
 	default:

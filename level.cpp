@@ -30,7 +30,7 @@ void Level::update(float frametime, int my_timer) {
         bullets.push_back(UFO->aim(ship.getPosition()));/////////////
        
     }
-    if ((my_timer % 3000 == 0) && UFO == nullptr)
+    if ((my_timer % 3000 == 0 || my_timer % 3000 == 1) && UFO == nullptr)
     {
         UFO = new Enemy(2);  
     }

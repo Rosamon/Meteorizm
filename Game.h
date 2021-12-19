@@ -13,11 +13,8 @@ class Game {
         ~Game();
         int run();
         void quit();
-        void pause();
-        void unpause();
         void createGameWindow();
         void createWindow();
-        void createPauseWindow();
 
     private:
         sf::RenderWindow window;

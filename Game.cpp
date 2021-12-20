@@ -50,6 +50,20 @@ int Game::run() {
         }
         level.show(window);
         window.display();
+        if (!dedinside) {
+            window.close();
+            window.create(sf::VideoMode(APP_WIDTH, APP_HEIGHT), "GameOver", sf::Style::Close);
+            window.setKeyRepeatEnabled(true);
+            window.setFramerateLimit(APP_FPS);
+            Texture Texture_End;
+            Texture_End.loadFromFile("images\\GameOver.png");
+            Sprite GameEnd;
+            GameEnd.setTexture(Texture_End);//передаём в него объект Texture (текстуры)
+            window.draw(GameEnd);
+            window.display();
+            Sleep(5000);
+            return EXIT_SUCCESS;
+        }
     }
     return EXIT_SUCCESS;
 }

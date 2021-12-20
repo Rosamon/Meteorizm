@@ -31,7 +31,7 @@ int Game::run() {
                 GameEnd.setTexture(Texture_End);//???????? ? ???? ?????? Texture (????????)
                 window.draw(GameEnd);
                 window.display();
-                Sleep(5000);
+                //Sleep(5000);
                 return EXIT_SUCCESS;
             }
             if (event.type == sf::Event::Closed) {

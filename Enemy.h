@@ -1,10 +1,9 @@
 #include <SFML/Graphics.hpp>
-
-class Enemy: public ObjectBase, public sf::Drawable, public sf::Transformable
+#include "Bullet.hpp"
+//#include "ObjectBase.h"
+class Enemy:  public sf::Drawable, public sf::Transformable
 {
 public:
-	Enemy(): ObjectBase() {};
-	~Enemy();
 	Enemy(int position);// 1, 2, 3
 	void punched();// окрашивает в красный или белый, считает количество попаданий
 	void punch(bool hit) {ishit = hit;};
@@ -19,8 +18,9 @@ public:
 private:
 	
     bool alive, ishit;
+    int level;
     sf::Vector2f direction; // (-1;0) || (1;0)
     sf::Vector2f position_UFO;
-    Sprite enemyUFOsprite;
+    sf::Sprite enemyUFOsprite;
     sf::Texture enemytexture;
 };

@@ -1,5 +1,7 @@
 #include "Asteroids.h"
 
+Texture AsteroidTexture; // текстура для астероида
+
 Asteroid::Asteroid(int level) : is_Alive(true), level(level) {
      //скорости и размеры Астероида
      float speed[3] = { 0.03f, 0.05f, 0.07f };
@@ -96,4 +98,9 @@ void Asteroid::update() {
         delete this;
     }
     setPosition(position);
+}
+
+void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    target.draw(AsterSprite);
 }

@@ -2,7 +2,7 @@
 #include "Level.h"
 #include <windows.h>
 using namespace sf;
-Game::Game():
+Game::Game() :
     running(true), lives(3) {
 }
 
@@ -12,7 +12,7 @@ Game::~Game() {
 
 int Game::run() {
     createWindow();
-    sf::Clock my_timer;// –¥–ª—è –∫–æ–Ω—Ç—Ä–æ–ª—è –¥–µ–π—Å—Ç–≤–∏–π —Ç–∞—Ä–µ–ª–∫–∏
+    sf::Clock my_timer;// ???ª?? ???????Ç?????ª?? ???µ?????Ç?????? ?Ç?∞???µ?ª????
     Level level;
     sf::Clock clock;
 
@@ -20,18 +20,19 @@ int Game::run() {
     while (running) {
         sf::Event event;
         while (window.pollEvent(event)) {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) { window.close();
-            window.create(sf::VideoMode(APP_WIDTH, APP_HEIGHT), "GameOver", sf::Style::Close);
-            window.setKeyRepeatEnabled(true);
-            window.setFramerateLimit(APP_FPS);
-            Texture Texture_End;
-            Texture_End.loadFromFile("images\\GameOver.png");
-            Sprite GameEnd;
-            GameEnd.setTexture(Texture_End);//ÔÂÂ‰‡∏Ï ‚ ÌÂ„Ó Ó·˙ÂÍÚ Texture (ÚÂÍÒÚÛ˚)
-            window.draw(GameEnd);
-            window.display();
-            Sleep(5000);
-            return EXIT_SUCCESS;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+                window.close();
+                window.create(sf::VideoMode(APP_WIDTH, APP_HEIGHT), "GameOver", sf::Style::Close);
+                window.setKeyRepeatEnabled(true);
+                window.setFramerateLimit(APP_FPS);
+                Texture Texture_End;
+                Texture_End.loadFromFile("images\\GameOver.png");
+                Sprite GameEnd;
+                GameEnd.setTexture(Texture_End);//???????? ? ???? ?????? Texture (????????)
+                window.draw(GameEnd);
+                window.display();
+                Sleep(5000);
+                return EXIT_SUCCESS;
             }
             if (event.type == sf::Event::Closed) {
                 window.close();
@@ -45,7 +46,7 @@ int Game::run() {
         level.update(clock.restart().asMilliseconds(), buff);
         if (buff >= 6030)
         {
-            my_timer.restart();// –ü–µ—Ä–µ–∑–∞–ø—É—Å–∫ —Ç–∞–π–º–µ—Ä–∞ –¥–ª—è —Ç–∞—Ä–µ–ª–∫–∏
+            my_timer.restart();// ???µ???µ?∑?∞???????? ?Ç?∞?????µ???∞ ???ª?? ?Ç?∞???µ?ª????
         }
         level.show(window);
         window.display();
@@ -56,14 +57,14 @@ void Game::createGameWindow() {
     window.create(sf::VideoMode(APP_WIDTH, APP_HEIGHT), APP_TITLE, sf::Style::Close);
     window.setKeyRepeatEnabled(true);
     window.setFramerateLimit(APP_FPS);
-    Texture Texture_Start,button_start,button_exit;
+    Texture Texture_Start, button_start, button_exit;
     button_start.loadFromFile("images\\start.png");
     button_exit.loadFromFile("images\\exit.png");
     Texture_Start.loadFromFile("images\\Ver2.png");
-    Sprite GamePic,StartSprite,ExitSprite;
+    Sprite GamePic, StartSprite, ExitSprite;
     bool isMenu = 1;
     int menuNum = 0;
-    GamePic.setTexture(Texture_Start);//√Ø√•√∞√•√§√†¬∏√¨ √¢ √≠√•√£√Æ √Æ√°√∫√•√™√≤ Texture (√≤√•√™√±√≤√≥√∞√ª)
+    GamePic.setTexture(Texture_Start);//?????∞???§?†???¨ ?? ?≠?????Æ ?Æ?????????? Texture (???????±?????∞?ª)
     StartSprite.setTexture(button_start);
     ExitSprite.setTexture(button_exit);
     StartSprite.setPosition(100, 300);
@@ -75,26 +76,27 @@ void Game::createGameWindow() {
         menuNum = 0;
 
         if (IntRect(100, 300, 150, 360).contains(Mouse::getPosition(window))) { StartSprite.setColor(Color::Green); menuNum = 1; }
-        if (IntRect(100, 400, 150, 460).contains(Mouse::getPosition(window))) { ExitSprite.setColor(Color::Red); menuNum = 2; }
-
-        if (Mouse::isButtonPressed(Mouse::Left))
-        {
-            if (menuNum == 2) { window.close(); system("exit"); };//√•√±√´√® √≠√†√¶√†√´√® √Ø√•√∞√¢√≥√æ √™√≠√Æ√Ø√™√≥, √≤√Æ √¢√ª√µ√Æ√§√®√¨ √®√ß √¨√•√≠√æ 
-            if (menuNum == 1) { window.clear(Color::Black); isMenu = false; }
-            if (Keyboard::isKeyPressed(sf::Keyboard::Escape)) { window.close(); system("exit"); }
-        
-
-        }
-
-        window.draw(GamePic);
-        window.draw(StartSprite);
-        window.draw(ExitSprite);
-
-        window.display();
+        if (IntRect(100, 4JUdGzvrMFDWrUUwY3toJATSeNwjn54LkCnKBPRzDuhzi5vSepHfUckJNxRL2gjkNrSqtCoRUrEDAgRwsQvVCjZbRyFTLRNyDmT1a1boZV;
     }
-    // √é√≤√∞√®√±√Æ√¢√™√† √Æ√™√≠√†
-    
-    
+
+    if (Mouse::isButtonPressed(Mouse::Left))
+    {
+        if (menuNum == 2) { window.close(); system("exit"); };//???±?´?? ?≠?†?¶?†?´?? ?????∞?????? ???≠?Æ??????, ???Æ ???ª?µ?Æ?§???¨ ???ß ?¨???≠?? 
+        if (menuNum == 1) { window.clear(Color::Black); isMenu = false; }
+        if (Keyboard::isKeyPressed(sf::Keyboard::Escape)) { window.close(); system("exit"); }
+
+
+    }
+
+    window.draw(GamePic);
+    window.draw(StartSprite);
+    window.draw(ExitSprite);
+
+    window.display();
+}
+// ?????∞???±?Æ?????† ?Æ???≠?†
+
+
 }
 
 void Game::createWindow() {

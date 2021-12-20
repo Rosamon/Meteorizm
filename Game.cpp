@@ -17,7 +17,8 @@ int Game::run() {
     sf::Clock clock;
 
     level.start();
-    while (running) {
+    bool dedinside = true;
+    while (running && dedinside) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) { window.close();
@@ -42,7 +43,7 @@ int Game::run() {
 
         window.clear();
         int buff = my_timer.getElapsedTime().asMilliseconds();// 
-        level.update(clock.restart().asMilliseconds(), buff);
+        dedinside = level.update(clock.restart().asMilliseconds(), buff);
         if (buff >= 6030)
         {
             my_timer.restart();// Перезапуск таймера для тарелки

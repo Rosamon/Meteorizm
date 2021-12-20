@@ -13,7 +13,7 @@ class Level {
         Level();
         ~Level();
         void onEvent(const sf::Event& event);
-        void update(float frametime, int);
+        bool update(float frametime, int);
         void show(sf::RenderTarget& target);
         void start();
 

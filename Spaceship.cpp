@@ -103,12 +103,9 @@ void Spaceship::update(float frametime) {
  
 
 }
-void Spaceship::dedinside() {
-    Vector2f ghoul = sprite.getPosition();
-
-
-
-
+bool Spaceship::dedinside() {
+    //Vector2f ghoul = sprite.getPosition();
+    return(live == 0);
 }
 void Spaceship::onEvent(const sf::Event& event) {
 
@@ -150,7 +147,24 @@ void Spaceship::onEvent(const sf::Event& event) {
 
 }
 
+bool Spaceship::checkPoint(sf::Vector2f point) {
+    
+        float ax = sprite.getPosition().x ;
+        float ay = sprite.getPosition().y;
 
+        float px = point.x;
+        float py = point.y;
+
+        if ((px >= ax && px <= ax + 45 && py >= ay && py <= ay + 75)) {
+            live--;
+            return (true);
+        }
+        else
+        {
+            return(false);
+        }
+    
+}
 
 
 

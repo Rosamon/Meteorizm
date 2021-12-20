@@ -18,12 +18,13 @@ class Spaceship: public sf::Drawable, public sf::Transformable {
         Texture texture;// текстура
         Sprite sprite;// спрайт
         void reset();
-        void dedinside();
+        bool dedinside();
         void update(float frametime);
         //void interactionWithMap();
         void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         void onEvent(const sf::Event& event);
         sf::Vector2f position;
+        bool checkPoint(sf::Vector2f point);
 
 
 };

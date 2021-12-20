@@ -19,7 +19,7 @@ void Level::onEvent(const sf::Event& event) {
         
     }
 }
-void Level::update(float frametime, int my_timer) {
+bool Level::update(float frametime, int my_timer) {
     ship.update(frametime);
     if (UFO != nullptr)
     {
@@ -98,11 +98,17 @@ void Level::update(float frametime, int my_timer) {
     }
     start_bullets = bullets.begin();
     while (start_bullets != bullets.end()) {
-        if (!start_bullets->isAlive()) {
+        if (!start_bullets->isAlive() || start_bullets->isItEnemy()) {
+            if (ship.checkPoint(start_bullets->getPosition()))
+            {
+                start_bullets->kill();
+                if (ship.dedinside())
+                    return false;
+            }
             ++start_bullets;
             continue;
         }
-        if (UFO != nullptr && !start_bullets->isItEnemy() && UFO->checkPoint(start_bullets->getPosition()))//1
+        if (UFO != nullptr && UFO->checkPoint(start_bullets->getPosition()))//1
         {
             UFO->punch(true);
             start_bullets->kill();
@@ -114,6 +120,7 @@ void Level::update(float frametime, int my_timer) {
         
     
     asteroids.insert(asteroids.end(), new_asteroids.begin(), new_asteroids.end());
+    return true;
 }
 
 void Level::show(sf::RenderTarget& target) {

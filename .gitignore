@@ -162,3 +162,4 @@ $RECYCLE.BIN/
 .DS_Store
 AsteroidsForGame.vcxproj
 AsteroidsForGame.vcxproj.filters
+*.vcxproj

@@ -22,7 +22,7 @@ Bullet::Bullet(sf::Vector2f position, float angle, bool isenemy):
         setPosition(position);
         bulletSprite.setPosition(position);
 
-        bulletTexture.loadFromFile("Kursa4.png");
+        bulletTexture.loadFromFile("images\\Kursa4.png");
         bulletSprite.setTexture(bulletTexture);
         //bulletSprite.setTextureRect(sf::IntRect(59, 377, 14, 31));//вверх
         bulletSprite.setTextureRect(sf::IntRect(145, 377, 19, 31));//вниз

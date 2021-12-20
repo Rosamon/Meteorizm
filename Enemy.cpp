@@ -23,7 +23,7 @@ alive(true)
 	enemyUFOsprite.setPosition(position_UFO);
 	level = 4;
 	
-	enemytexture.loadFromFile("Kursa4.png");
+	enemytexture.loadFromFile("images\\Kursa4.png");
 	enemyUFOsprite.setTexture(enemytexture);
 	enemyUFOsprite.setTextureRect(sf::IntRect(416, 45, 70, 47));
 }

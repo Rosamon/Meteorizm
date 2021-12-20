@@ -2,7 +2,7 @@
 
 Level::Level() {
     for (int i=0; i < 3; i++) {
-        Asteroid a(0);
+        Asteroid a(0);///
         asteroids.push_back(a);
     }
 }
@@ -77,7 +77,8 @@ void Level::update(float frametime, int my_timer) {
                 if (start_asteroids->isAlive()) {
                     sf::Vector2f position = start_asteroids->getPosition();
                     float angle = rand() % 360;
-                    Asteroid a(position, angle, start_asteroids->getLevel());
+                    //Asteroid a(position, angle, start_asteroids->getLevel());
+                    Asteroid a(0);
                     new_asteroids.push_back(a);
                 }
                 break;

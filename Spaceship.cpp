@@ -3,7 +3,7 @@
 
 
 Spaceship::Spaceship() {
-    image.loadFromFile("images\\ship.png" );//запихиваем в image наше изображение вместо File мы передадим то, что пропишем при создании объекта.
+    image.loadFromFile("images\\Kursa4.png" );//запихиваем в image наше изображение вместо File мы передадим то, что пропишем при создании объекта.
     texture.loadFromImage(image);//закидываем наше изображение в текстуру
     sprite.setTexture(texture);//заливаем спрайт текстурой
     sprite.setTextureRect(IntRect(238, 38, 45, 73));  //«адаем спрайту один пр€моугольник дл€ вывода одного корабл€. IntRect - приведение типов

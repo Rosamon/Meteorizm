@@ -2,7 +2,7 @@
 #define _ASTEROIDS_H_
 
 #include <SFML/Graphics.hpp>
-#include "ObjectBase.h"
+//#include "ObjectBase.h"
 
 #ifndef DEG2RAD
 #define DEG2RAD 3.14159f / 180.0f // перевод из градусов в радианы
@@ -12,10 +12,10 @@ using namespace sf;//включаем пространство имен sf, чтобы постоянно не писать sf
 
 
 // интерфейс класса Asteroid
-class Asteroid : public ObjectBase, public sf::Drawable, public sf::Transformable {
+class Asteroid :  public sf::Drawable, public sf::Transformable {
 
 public:
-    Asteroid() : ObjectBase() {}; // наследуем конструктор базового класса
+    Asteroid(); // наследуем конструктор базового класса
     Asteroid(int level); // конструктор с параметром "уровень"
     Asteroid(Vector2f position, float angle, int level); // конструктор с параметрами "позиция", "угол" - для направления, "уровень"
     ~Asteroid(); // деструктор 
@@ -32,6 +32,6 @@ private:
     bool is_Alive; // состояние астероида
     Vector2f direction; // направление астероида
     Sprite AsterSprite; // спрайт для астероида
-    Texture AsteroidTexture; // текстура для астероида
+    
 };
 #endif

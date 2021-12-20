@@ -1,16 +1,16 @@
-#include "Spaceship.hpp"
+#include "Spaceship.h"
 
 
 
 Spaceship::Spaceship() {
-    image.loadFromFile("images\\ship.png" );//запихиваем в image наше изображение вместо File мы передадим то, что пропишем при создании объекта.
+    image.loadFromFile("images\\Kursa4.png" );//запихиваем в image наше изображение вместо File мы передадим то, что пропишем при создании объекта.
     texture.loadFromImage(image);//закидываем наше изображение в текстуру
     sprite.setTexture(texture);//заливаем спрайт текстурой
     sprite.setTextureRect(IntRect(238, 38, 45, 73));  //Задаем спрайту один прямоугольник для вывода одного корабля. IntRect - приведение типов
     x = 500; y = 500;//координата появления спрайта
     live = 3;
     sprite.setPosition(x, y); //выводим спрайт в позицию x y , посередине. бесконечно выводим в этой функции, иначе бы наш спрайт стоял на месте
-    speed = 1;
+    speed = 0.8;
     reset();
 }
 
@@ -66,8 +66,8 @@ void Spaceship::update(float frametime) {
 
     }
 
-    x += dx * frametime;//то движение из прошлого урока. наше ускорение на время получаем смещение координат и как следствие движение
-    y += dy * frametime;//аналогично по игреку
+    //x = dx * frametime;//то движение из прошлого урока. наше ускорение на время получаем смещение координат и как следствие движение
+    //y = dy * frametime;//аналогично по игреку
    /* interactionWithMap();*///вызываем функцию, отвечающую за взаимодействие с картой
     spee = 0; //зануляем скорость, чтобы ракета остановилась.
     
@@ -82,19 +82,19 @@ void Spaceship::update(float frametime) {
     }
 
     sf::Vector2f position = getPosition();
-    if (position.x < 0 || position.x + 60 > APP_WIDTH || position.y < 0 || position.y + 80 > APP_HEIGHT)
+    if (position.x < 0 || position.x + 60 > 1000 || position.y < 0 || position.y + 80 > 1000)
     {
        if (position.x < 0) 
            position.x = + 10;
 
-     if (position.x + 70 > APP_WIDTH)
-        position.x = APP_WIDTH - 70;
+     if (position.x + 70 > 1000)
+        position.x = 1000 - 70;
 
     if (position.y < 0)
         position.y = +10;
 
-    if (position.y + 80 > APP_HEIGHT)
-        position.y = APP_HEIGHT-80;
+    if (position.y + 80 > 1000)
+        position.y = 1000-80;
    
     setPosition(position);
     sprite.setPosition(position);
@@ -143,8 +143,9 @@ void Spaceship::onEvent(const sf::Event& event) {
         dir = 2; spee = 1;//направление вниз, см выше
         sprite.setTextureRect(IntRect(238, 38, 45, 73));
         Vector2f opa = getPosition();
-        if (opa.y <= APP_HEIGHT-80)
-        sprite.setPosition(opa.x - 23, opa.y - 35);
+        if (opa.y <= 1000 - 90) {
+            sprite.setPosition(opa.x + 23, opa.y + 35);
+        }
     }
 
 }

@@ -11,16 +11,18 @@ Asteroid::Asteroid(int level) : is_Alive(true), level(level) {
      AsterImage.loadFromFile("images/Kursa4.png");
      AsteroidTexture.loadFromImage(AsterImage);
      AsterSprite = Sprite(AsteroidTexture, IntRect(38, 38, 75, 75)); // целый
-     AsterSprite.setOrigin(radius[level], radius[level]);
+     //int y_buff = rand() % (1000 - radius[level] - 40) + radius[level] + 20;
+     //AsterSprite.setOrigin(radius[level], y_buff);
     
-    int angle = 270 % 360; // угол в 270 градусов, задаем направление строго вниз
-    direction = Vector2f(cos(angle * DEG2RAD), sin(angle * DEG2RAD));
-
-    int x = radius[level] + rand() % (800 - radius[level]); // 800 - предполагаемая ширина окна
+    //int angle = 270 % 360; // угол в 270 градусов, задаем направление строго вниз
+    //direction = Vector2f(cos(angle * DEG2RAD), sin(angle * DEG2RAD));
+     direction = sf::Vector2f(0, 1);
+    int x = radius[level] + rand() % (1000 - radius[level]); // 800 - предполагаемая ширина окна
     int y = radius[level] + rand() % 100; // 100 - первые сто px сверху окна
 
     Vector2f position(x, y);
-    setPosition(position);    
+    setPosition(position.x - radius[level], position.y - radius[level]);
+    AsterSprite.setPosition(position);
     
 }
 
@@ -78,26 +80,29 @@ void Asteroid::breakDown() {
     }
     };
 
-    float angle = 90 % 360;
-    direction = sf::Vector2f(cos(angle * DEG2RAD), sin(angle * DEG2RAD));
+    //float angle = 90 % 360;
+    //direction = sf::Vector2f(cos(angle * DEG2RAD), sin(angle * DEG2RAD));
+    
 }
 
 void Asteroid::update() {
     if (!is_Alive) return;
 
-    AsterSprite.rotate(15);
+    //AsterSprite.rotate(5);
 
     float speed[3] = { 0.03f, 0.05f, 0.07f };
-    sf::Vector2f distance = direction * speed[level] * 60.0f;
+    sf::Vector2f distance = direction * speed[level] * 20.0f;// 
     move(distance);
-
+    AsterSprite.move(distance);
     sf::Vector2f position = getPosition();
     int radius[3] = { 37.5, 37.5, 18 };
     //здесь 600 - высота окна
-    if (position.y > (600 - radius[level])) {
-        delete this;
+    if (position.y > (1000 - radius[level])) {
+        is_Alive = false;
+        //delete this;
     }
     setPosition(position);
+    AsterSprite.setPosition(position);
 }
 
 void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const

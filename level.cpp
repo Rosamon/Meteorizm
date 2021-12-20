@@ -39,6 +39,12 @@ void Level::update(float frametime, int my_timer) {
         delete UFO;
         UFO = nullptr;
     }
+    if ((my_timer % 700) == 0 && UFO != nullptr && UFO->isAlive())///////////////
+    {
+        Asteroid a(0);///
+        asteroids.push_back(a);
+
+    }
     //Работа класса enemy
     ////////////////
     std::vector<Bullet>::iterator start_bullets = bullets.begin();
@@ -76,14 +82,14 @@ void Level::update(float frametime, int my_timer) {
 
                 if (start_asteroids->isAlive()) {
                     sf::Vector2f position = start_asteroids->getPosition();
-                    float angle = rand() % 360;
+                    //float angle = rand() % 360;
                     //Asteroid a(position, angle, start_asteroids->getLevel());
-                    Asteroid a(0);
-                    new_asteroids.push_back(a);
+                    //Asteroid a(0);
+                    //new_asteroids.push_back(a);
                 }
                 break;
                 ////
-                if (UFO != nullptr && !start_bullets->isItEnemy() && UFO->checkPoint(start_bullets->getPosition()))///////////////
+                if (UFO != nullptr && start_bullets->isItEnemy() && UFO->checkPoint(start_bullets->getPosition()))//1
                 {
                     UFO->punch(true);
                     start_bullets->kill();

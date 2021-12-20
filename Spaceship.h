@@ -3,7 +3,7 @@
 
 #include <math.h>
 #include <SFML/Graphics.hpp>
-#include "Constants.hpp"
+
 using namespace sf;
 class Spaceship: public sf::Drawable, public sf::Transformable {
 

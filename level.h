@@ -3,9 +3,10 @@
 
 #include "Enemy.h"
 //#include "Bullet.h"
-#include "Asteroid.h"
+#include <SFML/Graphics.hpp>
+#include "Asteroids.h"
 #include "Spaceship.h"//пока нет
-#include <SFML/Graphics.h>
+
 
 class Level {
     public:

@@ -32,7 +32,7 @@ int Game::run() {
                 GameEnd.setTexture(Texture_End);//передаём в него объект Texture (текстуры)
                 window.draw(GameEnd);
                 window.display();
-                Sleep(5000);
+                //Sleep(5000);
                 return EXIT_SUCCESS;
                 return EXIT_SUCCESS;
             }

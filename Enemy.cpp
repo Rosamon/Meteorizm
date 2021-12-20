@@ -23,7 +23,7 @@ alive(true)
 	enemyUFOsprite.setPosition(position_UFO);
 	level = 4;
 	
-	enemytexture.loadFromFile("Kursa4.png");
+	enemytexture.loadFromFile("images\\Kursa4.png");
 	enemyUFOsprite.setTexture(enemytexture);
 	enemyUFOsprite.setTextureRect(sf::IntRect(416, 45, 70, 47));
 }
@@ -33,7 +33,7 @@ void Enemy::punched()
 	
 	if (ishit)
 	{
-		enemyUFOsprite.setColor(Color::Red);
+		enemyUFOsprite.setColor(sf::Color::Red);
 		level--;
 		if (level < 0)
 		{
@@ -43,7 +43,7 @@ void Enemy::punched()
 	}
 	else
 	{
-		enemyUFOsprite.setColor(Color::White);
+		enemyUFOsprite.setColor(sf::Color::White);
 	}
 	if (level == 0)
 	{
@@ -65,7 +65,7 @@ Bullet Enemy::aim(sf::Vector2f position)
 bool Enemy::moved(float frametime)
 {
 	//
-	sf::Vector2f position = enemyUFOsprite.getposition();
+	sf::Vector2f position = position_UFO;
 	if (position_UFO.x >= 899)
 	{
 		direction.x = -1;
@@ -87,7 +87,7 @@ bool Enemy::moved(float frametime)
 			direction.x = 1;
 		}
 	}
-	sf::Vector2f distance = direction * 0.1 * frametime;
+	sf::Vector2f distance = direction * 0.1f * frametime;
     enemyUFOsprite.move(distance);
     position_UFO += distance;
     return true;

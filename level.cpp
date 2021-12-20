@@ -1,5 +1,5 @@
 #include "Level.h"
-
+#include <iostream>
 Level::Level() {
     for (int i=0; i < 3; i++) {
         Asteroid a(0);///
@@ -16,6 +16,7 @@ void Level::onEvent(const sf::Event& event) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         Bullet bullet(ship.getPosition(), ship.getRotation(), false);
         bullets.push_back(bullet);
+        
     }
 }
 void Level::update(float frametime, int my_timer) {
@@ -89,18 +90,29 @@ void Level::update(float frametime, int my_timer) {
                 }
                 break;
                 ////
-                if (UFO != nullptr && start_bullets->isItEnemy() && UFO->checkPoint(start_bullets->getPosition()))//1
-                {
-                    UFO->punch(true);
-                    start_bullets->kill();
-                }
-                // Взаимодействие с тарелкой
-                ////////////////
+                
             }
             ++start_bullets;
         }
         ++start_asteroids;
     }
+    start_bullets = bullets.begin();
+    while (start_bullets != bullets.end()) {
+        if (!start_bullets->isAlive()) {
+            ++start_bullets;
+            continue;
+        }
+        if (UFO != nullptr && !start_bullets->isItEnemy() && UFO->checkPoint(start_bullets->getPosition()))//1
+        {
+            UFO->punch(true);
+            start_bullets->kill();
+        }
+        // Взаимодействие с тарелкой
+        ////////////////     
+        ++start_bullets;
+        }
+        
+    
     asteroids.insert(asteroids.end(), new_asteroids.begin(), new_asteroids.end());
 }
 

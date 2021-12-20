@@ -1,5 +1,4 @@
 #include "Enemy.h"
-
 // 1, 2, 3
 Enemy::Enemy(int position):
 alive(true)

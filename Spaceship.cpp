@@ -1,13 +1,15 @@
-#include "Spaceship.h"
+#include "Spaceship.hpp"
 
 
 
 Spaceship::Spaceship() {
-    image.loadFromFile("images\\Kursa4.png" );//запихиваем в image наше изображение вместо File мы передадим то, что пропишем при создании объекта.
-    texture.loadFromImage(image);//закидываем наше изображение в текстуру
-    sprite.setTexture(texture);//заливаем спрайт текстурой
-    sprite.setTextureRect(IntRect(238, 38, 45, 73));  //Задаем спрайту один прямоугольник для вывода одного корабля. IntRect - приведение типов
-    x = 475; y = 915;//координата появления спрайта
+    image.loadFromFile("images\\ship.png" );//Р·Р°РїРёС…РёРІР°РµРј РІ image РЅР°С€Рµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РІРјРµСЃС‚Рѕ File РјС‹ РїРµСЂРµРґР°РґРёРј С‚Рѕ, С‡С‚Рѕ РїСЂРѕРїРёС€РµРј РїСЂРё СЃРѕР·РґР°РЅРёРё РѕР±СЉРµРєС‚Р°.
+    texture.loadFromImage(image);//Р·Р°РєРёРґС‹РІР°РµРј РЅР°С€Рµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РІ С‚РµРєСЃС‚СѓСЂСѓ
+    sprite.setTexture(texture);//Р·Р°Р»РёРІР°РµРј СЃРїСЂР°Р№С‚ С‚РµРєСЃС‚СѓСЂРѕР№
+    sprite.setTextureRect(IntRect(238, 38, 45, 73));  //Р—Р°РґР°РµРј СЃРїСЂР°Р№С‚Сѓ РѕРґРёРЅ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРє РґР»СЏ РІС‹РІРѕРґР° РѕРґРЅРѕРіРѕ РєРѕСЂР°Р±Р»СЏ. IntRect - РїСЂРёРІРµРґРµРЅРёРµ С‚РёРїРѕРІ
+    x = 500; y = 500;//РєРѕРѕСЂРґРёРЅР°С‚Р° РїРѕСЏРІР»РµРЅРёСЏ СЃРїСЂР°Р№С‚Р°
+    live = 3;
+    sprite.setPosition(x, y); //РІС‹РІРѕРґРёРј СЃРїСЂР°Р№С‚ РІ РїРѕР·РёС†РёСЋ x y , РїРѕСЃРµСЂРµРґРёРЅРµ. Р±РµСЃРєРѕРЅРµС‡РЅРѕ РІС‹РІРѕРґРёРј РІ СЌС‚РѕР№ С„СѓРЅРєС†РёРё, РёРЅР°С‡Рµ Р±С‹ РЅР°С€ СЃРїСЂР°Р№С‚ СЃС‚РѕСЏР» РЅР° РјРµСЃС‚Рµ
     speed = 1;
     reset();
 }
@@ -16,106 +18,138 @@ Spaceship::~Spaceship() {
 }
 
 void Spaceship::reset() {
-    setPosition(475, 915);
+    setPosition(522.5, 530);
     rotate(-90);
 }
 
 void Spaceship::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(sprite);
 }
-void Spaceship::interactionWithMap() {
-    float   height = 1000, width = 1000;
-
-
-    if (x < 0 || y < 0 || x + 68 > width || y + 75 > height)
-
-        // проверяем "направление скорости" ракеты:
-    {
-        if (dy > 0)//если мы шли вниз,
-        {
-            y = y - 1;//то стопорим координату игрек персонажа. 
-        }
-
-        if (dx > 0)
-        {
-            x = x - 1;//если идем вправо
-        }
-
-        if (dy < 0)
-        {
-            y += 1;//аналогично с ходьбой вверх. dy<0, значит мы идем вверх
-        }
-
-        if (dx < 0)
-        {
-            x += 1;//аналогично идем влево
-        }
-    }
-}
+//void Spaceship::interactionWithMap() {
+//    float   height = 1000, width = 1000;
+//
+//
+//    if (x <= 0 || y <= 0 || x + 80 >= width || y + 80 >= height)
+//
+//        // РїСЂРѕРІРµСЂСЏРµРј "РЅР°РїСЂР°РІР»РµРЅРёРµ СЃРєРѕСЂРѕСЃС‚Рё" СЂР°РєРµС‚С‹:
+//    {
+//        if (dy > 0)//РµСЃР»Рё РјС‹ С€Р»Рё РІРЅРёР·,
+//        {
+//            y = height - 73;//С‚Рѕ СЃС‚РѕРїРѕСЂРёРј РєРѕРѕСЂРґРёРЅР°С‚Сѓ РёРіСЂРµРє РїРµСЂСЃРѕРЅР°Р¶Р°. 
+//        }
+//
+//        if (dx > 0)
+//        {
+//            x = width - 45;//РµСЃР»Рё РёРґРµРј РІРїСЂР°РІРѕ
+//        }
+//
+//        if (dy < 0)
+//        {
+//            y = +1;//Р°РЅР°Р»РѕРіРёС‡РЅРѕ СЃ С…РѕРґСЊР±РѕР№ РІРІРµСЂС…. dy<0, Р·РЅР°С‡РёС‚ РјС‹ РёРґРµРј РІРІРµСЂС…
+//        }
+//
+//        if (dx < 0)
+//        {
+//            x = +1;//Р°РЅР°Р»РѕРіРёС‡РЅРѕ РёРґРµРј РІР»РµРІРѕ
+//        }
+//    }
+//}
 
 void Spaceship::update(float frametime) {
-    switch (dir)//реализуем поведение в зависимости от направления. (каждая цифра соответствует направлению)
+
+    switch (dir)//СЂРµР°Р»РёР·СѓРµРј РїРѕРІРµРґРµРЅРёРµ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РЅР°РїСЂР°РІР»РµРЅРёСЏ. (РєР°Р¶РґР°СЏ С†РёС„СЂР° СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РЅР°РїСЂР°РІР»РµРЅРёСЋ)
     {
-    case 0: dx = spee; dy = 0;   break;//по иксу задаем положительную скорость, по игреку зануляем. получаем, что ракета летит только вправо
-    case 1: dx = -spee; dy = 0;   break;//по иксу задаем отрицательную скорость, по игреку зануляем. получается, что ракета летит только влево
-    case 2: dx = 0; dy = spee;   break;//по иксу задаем нулевое значение, по игреку положительное. получается, что ракета летит только вниз
-    case 3: dx = 0; dy = -spee;   break;//по иксу задаем нулевое значение, по игреку отрицательное. получается, что ракета летит только вверх
+    case 0: dx = spee; dy = 0;   break;//РїРѕ РёРєСЃСѓ Р·Р°РґР°РµРј РїРѕР»РѕР¶РёС‚РµР»СЊРЅСѓСЋ СЃРєРѕСЂРѕСЃС‚СЊ, РїРѕ РёРіСЂРµРєСѓ Р·Р°РЅСѓР»СЏРµРј. РїРѕР»СѓС‡Р°РµРј, С‡С‚Рѕ СЂР°РєРµС‚Р° Р»РµС‚РёС‚ С‚РѕР»СЊРєРѕ РІРїСЂР°РІРѕ
+    case 1: dx = -spee; dy = 0;   break;//РїРѕ РёРєСЃСѓ Р·Р°РґР°РµРј РѕС‚СЂРёС†Р°С‚РµР»СЊРЅСѓСЋ СЃРєРѕСЂРѕСЃС‚СЊ, РїРѕ РёРіСЂРµРєСѓ Р·Р°РЅСѓР»СЏРµРј. РїРѕР»СѓС‡Р°РµС‚СЃСЏ, С‡С‚Рѕ СЂР°РєРµС‚Р° Р»РµС‚РёС‚ С‚РѕР»СЊРєРѕ РІР»РµРІРѕ
+    case 2: dx = 0; dy = spee;   break;//РїРѕ РёРєСЃСѓ Р·Р°РґР°РµРј РЅСѓР»РµРІРѕРµ Р·РЅР°С‡РµРЅРёРµ, РїРѕ РёРіСЂРµРєСѓ РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕРµ. РїРѕР»СѓС‡Р°РµС‚СЃСЏ, С‡С‚Рѕ СЂР°РєРµС‚Р° Р»РµС‚РёС‚ С‚РѕР»СЊРєРѕ РІРЅРёР·
+    case 3: dx = 0; dy = -spee;   break;//РїРѕ РёРєСЃСѓ Р·Р°РґР°РµРј РЅСѓР»РµРІРѕРµ Р·РЅР°С‡РµРЅРёРµ, РїРѕ РёРіСЂРµРєСѓ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ. РїРѕР»СѓС‡Р°РµС‚СЃСЏ, С‡С‚Рѕ СЂР°РєРµС‚Р° Р»РµС‚РёС‚ С‚РѕР»СЊРєРѕ РІРІРµСЂС…
 
     }
 
-    x == dx * frametime;//то движение из прошлого урока. наше ускорение на время получаем смещение координат и как следствие движение
-    y == dy * frametime;//аналогично по игреку
-    interactionWithMap();//вызываем функцию, отвечающую за взаимодействие с картой
-    spee = 0; //зануляем скорость, чтобы ракета остановилась.
-    sprite.move(x,y);
-    move(x,y);
-    //sprite.setPosition(x, y); //выводим спрайт в позицию x y , посередине. бесконечно выводим в этой функции, иначе бы наш спрайт стоял на месте
-    //if (dy != 0 ||dx != 0) {
-//
-     //   sf::Vector2f distance;
-     //   distance.x += dx * frametime * speed;
-     //   distance.y += dy * frametime * speed;
-//
-     //   move(distance);
-     //   sprite.move(distance);
-    //}
-    spee = 0;
+    x += dx * frametime;//С‚Рѕ РґРІРёР¶РµРЅРёРµ РёР· РїСЂРѕС€Р»РѕРіРѕ СѓСЂРѕРєР°. РЅР°С€Рµ СѓСЃРєРѕСЂРµРЅРёРµ РЅР° РІСЂРµРјСЏ РїРѕР»СѓС‡Р°РµРј СЃРјРµС‰РµРЅРёРµ РєРѕРѕСЂРґРёРЅР°С‚ Рё РєР°Рє СЃР»РµРґСЃС‚РІРёРµ РґРІРёР¶РµРЅРёРµ
+    y += dy * frametime;//Р°РЅР°Р»РѕРіРёС‡РЅРѕ РїРѕ РёРіСЂРµРєСѓ
+   /* interactionWithMap();*///РІС‹Р·С‹РІР°РµРј С„СѓРЅРєС†РёСЋ, РѕС‚РІРµС‡Р°СЋС‰СѓСЋ Р·Р° РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ РєР°СЂС‚РѕР№
+    spee = 0; //Р·Р°РЅСѓР»СЏРµРј СЃРєРѕСЂРѕСЃС‚СЊ, С‡С‚РѕР±С‹ СЂР°РєРµС‚Р° РѕСЃС‚Р°РЅРѕРІРёР»Р°СЃСЊ.
+    
+    if (dy != 0 ||dx != 0) {
+
+        sf::Vector2f distance;
+        distance.x = dx * frametime * speed;
+        distance.y = dy * frametime * speed;
+
+        move(distance);
+        sprite.move(distance);
+    }
+
     sf::Vector2f position = getPosition();
-    if (position.x < -10.0f)
-        position.x = 0;
-    else if (position.x > 1000)
-        position.x = 1000.0f;
+    if (position.x < 0 || position.x + 60 > APP_WIDTH || position.y < 0 || position.y + 80 > APP_HEIGHT)
+    {
+       if (position.x < 0) 
+           position.x = + 10;
 
-    if (position.y < -10.0f)
-        position.y = 0;
-    else if (position.y > 1000)
-        position.y = 1000.0f;
+     if (position.x + 70 > APP_WIDTH)
+        position.x = APP_WIDTH - 70;
 
+    if (position.y < 0)
+        position.y = +10;
+
+    if (position.y + 80 > APP_HEIGHT)
+        position.y = APP_HEIGHT-80;
+   
     setPosition(position);
-}
+    sprite.setPosition(position);
+    
+    }
+ 
 
+}
+void Spaceship::dedinside() {
+    Vector2f ghoul = sprite.getPosition();
+
+
+
+
+}
 void Spaceship::onEvent(const sf::Event& event) {
+
+        sprite.setTextureRect(IntRect(238, 38, 45, 73));
+        Vector2f opa = getPosition();
+        sprite.setPosition(opa.x - 23, opa.y - 35);
   
     if ((Keyboard::isKeyPressed(Keyboard::Left) || (Keyboard::isKeyPressed(Keyboard::A)))) {
 
-        dir = 1; spee = 0.2f;//dir =1 - направление вверх, speed =0.1 - скорость движения.
+        dir = 1; spee = 1;// РЅР°РїСЂР°РІР»РµРЅРёРµ РІР»РµРІРѕ
         sprite.setTextureRect(IntRect(319, 155, 68, 66));
+        Vector2f opa = getPosition();
+        sprite.setPosition(opa);
     }
 
 
     if ((Keyboard::isKeyPressed(Keyboard::Right) || (Keyboard::isKeyPressed(Keyboard::D)))) {
-        dir = 0; spee= 0.2f;//направление вправо, см выше
+        dir = 0; spee= 1;//РЅР°РїСЂР°РІР»РµРЅРёРµ РІРїСЂР°РІРѕ, СЃРј РІС‹С€Рµ
         sprite.setTextureRect(IntRect(307, 45, 68, 66));
+        Vector2f opa = getPosition();
+        sprite.setPosition(opa.x-47,opa.y);
     }
 
     if ((Keyboard::isKeyPressed(Keyboard::Up) || (Keyboard::isKeyPressed(Keyboard::W)))) {
-        dir = 3; spee = 0.2f;//направление вниз, см выше
+        dir = 3; spee = 1;//РЅР°РїСЂР°РІР»РµРЅРёРµ РІРІРµСЂС…, СЃРј РІС‹С€Рµ
         sprite.setTextureRect(IntRect(238, 38, 45, 73));
+        Vector2f opa = getPosition();
+        sprite.setPosition(opa.x - 23, opa.y - 35);
     }
 
-    if ((Keyboard::isKeyPressed(Keyboard::Down) || (Keyboard::isKeyPressed(Keyboard::S)))) { //если нажата клавиша стрелка влево или англ буква А
-        dir = 2; spee = 0.2f;//направление вверх, см выше
+    if ((Keyboard::isKeyPressed(Keyboard::Down) || (Keyboard::isKeyPressed(Keyboard::S)))) { 
+        dir = 2; spee = 1;//РЅР°РїСЂР°РІР»РµРЅРёРµ РІРЅРёР·, СЃРј РІС‹С€Рµ
         sprite.setTextureRect(IntRect(238, 38, 45, 73));
+        Vector2f opa = getPosition();
+        if (opa.y <= APP_HEIGHT-80)
+        sprite.setPosition(opa.x - 23, opa.y - 35);
     }
 
 }
+
+
+
+
+

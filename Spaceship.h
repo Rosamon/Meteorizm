@@ -3,7 +3,7 @@
 
 #include <math.h>
 #include <SFML/Graphics.hpp>
-
+#include "Constants.hpp"
 using namespace sf;
 class Spaceship: public sf::Drawable, public sf::Transformable {
 
@@ -12,14 +12,15 @@ class Spaceship: public sf::Drawable, public sf::Transformable {
         Spaceship();
         ~Spaceship();
        
-        float x, y, w, h, dx, dy,speed, spee = 0; //координаты игрока х и у, высота ширина, ускорение (по х и по у), сама скорость
-        int dir = 0; //направление (direction) движения игрока
-        Image image;//изображение
-        Texture texture;// текстура
-        Sprite sprite;// спрайт
+        float x, y, w, h, dx, dy,speed, spee = 0; //РєРѕРѕСЂРґРёРЅР°С‚С‹ РёРіСЂРѕРєР° С… Рё Сѓ, РІС‹СЃРѕС‚Р° С€РёСЂРёРЅР°, СѓСЃРєРѕСЂРµРЅРёРµ (РїРѕ С… Рё РїРѕ Сѓ), СЃР°РјР° СЃРєРѕСЂРѕСЃС‚СЊ
+        int dir = 0, live; //РЅР°РїСЂР°РІР»РµРЅРёРµ (direction) РґРІРёР¶РµРЅРёСЏ РёРіСЂРѕРєР°
+        Image image;//РёР·РѕР±СЂР°Р¶РµРЅРёРµ
+        Texture texture;// С‚РµРєСЃС‚СѓСЂР°
+        Sprite sprite;// СЃРїСЂР°Р№С‚
         void reset();
+        void dedinside();
         void update(float frametime);
-        void interactionWithMap();
+        //void interactionWithMap();
         void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         void onEvent(const sf::Event& event);
         sf::Vector2f position;

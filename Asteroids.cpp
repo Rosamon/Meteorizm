@@ -12,12 +12,12 @@ Asteroid::Asteroid(int level) : is_Alive(true), level(level) {
      AsteroidTexture.loadFromImage(AsterImage);
      AsterSprite = Sprite(AsteroidTexture, IntRect(38, 38, 75, 75)); // целый
      //int y_buff = rand() % (1000 - radius[level] - 40) + radius[level] + 20;
-     //AsterSprite.setOrigin(radius[level], y_buff);
+     AsterSprite.setOrigin(radius[level], radius[level]);
     
     //int angle = 270 % 360; // угол в 270 градусов, задаем направление строго вниз
     //direction = Vector2f(cos(angle * DEG2RAD), sin(angle * DEG2RAD));
      direction = sf::Vector2f(0, 1);
-    int x = radius[level] + rand() % (1000 - radius[level]); // 800 - предполагаемая ширина окна
+    int x = radius[level] + rand() % (1000 - radius[level]); // 1000 - предполагаемая ширина окна
     int y = radius[level] + rand() % 100; // 100 - первые сто px сверху окна
 
     Vector2f position(x, y);
@@ -36,8 +36,8 @@ bool Asteroid::checkPoint(sf::Vector2f point) {
     float ax = getPosition().x;
     float ay = getPosition().y;
 
-    float px = point.x;
-    float py = point.y;
+    float px = point.x + 5;
+    float py = point.y + 5;
 
     int radius[3] = { 37.5, 37.5, 18 };
     float sqrDistance = ((ax - px) * (ax - px)) + ((ay - py) * (ay - py));
@@ -88,7 +88,7 @@ void Asteroid::breakDown() {
 void Asteroid::update() {
     if (!is_Alive) return;
 
-    //AsterSprite.rotate(5);
+    AsterSprite.rotate(3);
 
     float speed[3] = { 0.03f, 0.05f, 0.07f };
     sf::Vector2f distance = direction * speed[level] * 20.0f;// 
@@ -96,7 +96,7 @@ void Asteroid::update() {
     AsterSprite.move(distance);
     sf::Vector2f position = getPosition();
     int radius[3] = { 37.5, 37.5, 18 };
-    //здесь 600 - высота окна
+    //здесь 1000 - высота окна
     if (position.y > (1000 - radius[level])) {
         is_Alive = false;
         //delete this;

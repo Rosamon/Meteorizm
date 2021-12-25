@@ -29,7 +29,7 @@ alive(true)
 
 void Enemy::punched()
 {
-	if (this != nullptr)
+	if (this == nullptr)
 		return;
 	if (ishit)
 	{
@@ -53,8 +53,6 @@ void Enemy::punched()
 
 Bullet Enemy::aim(sf::Vector2f position)
 {
-	if (this != nullptr)
-		return;
 	sf::Vector2f gunPosition = position_UFO;
 	gunPosition.x += 40;
 	gunPosition.y += 40;
@@ -66,7 +64,7 @@ Bullet Enemy::aim(sf::Vector2f position)
 
 bool Enemy::moved(float frametime)
 {
-	if (this != nullptr)
+	if (this == nullptr)
 		return false;
 	//
 	sf::Vector2f position = position_UFO;
@@ -104,7 +102,7 @@ void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Enemy::update(float frametime)
 {
-	if (this != nullptr)
+	if (this == nullptr)
 		return;
 	punched();
 	moved(frametime);
@@ -127,7 +125,7 @@ void Enemy::update(float frametime)
 }
 
 bool Enemy::checkPoint(sf::Vector2f point) {
-	if (this != nullptr)
+	if (this == nullptr)
 		return false;
 
 	float ax = position_UFO.x + 40;

@@ -20,6 +20,25 @@ Spaceship::Spaceship() {
 
 Spaceship::~Spaceship() {
 }
+bool Spaceship::isСollision(sf::FloatRect rect) {
+
+    // установка другой картинки на место коробля
+    if (TouchBox.intersects(rect) || rect.intersects(TouchBox)) {
+        if (rect.left + rect.width / 2 <= TouchBox.left)
+        {
+            setPosition(getPosition().x + 20, getPosition().y + 10);
+            sprite.setPosition(sprite.getPosition().x + 20, sprite.getPosition().y + 10);
+        }
+        else
+        {
+            setPosition(getPosition().x - 20, getPosition().y - 10);
+            sprite.setPosition(sprite.getPosition().x - 20, sprite.getPosition().y - 10);
+        }
+        live--;
+        return true;
+    }
+    return false;
+}
 
 void Spaceship::reset() {
     setPosition(522.5, 530);

@@ -1,3 +1,4 @@
+#pragma once
 #include <SFML/Graphics.hpp>
 #include "Bullet.hpp"
 //#include "ObjectBase.h"

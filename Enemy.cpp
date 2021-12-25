@@ -1,3 +1,4 @@
+#pragma once
 #include "Enemy.h"
 // 1, 2, 3
 Enemy::Enemy(int position):
@@ -8,6 +9,7 @@ alive(true)
 		case 3:
 			position_UFO.x = 100;
 			position_UFO.y = 50;
+			direction.x = 1;
 			break;
 		case 2:
 			position_UFO.x = 400;
@@ -16,6 +18,7 @@ alive(true)
 		default:
 			position_UFO.x = 900; // c учетом того что поле в ширину 1000
 			position_UFO.y = 50;
+			direction.x = -1;
 			break;
 	}
 
@@ -29,7 +32,8 @@ alive(true)
 
 void Enemy::punched()
 {
-	
+	if (this == nullptr)
+		return;
 	if (ishit)
 	{
 		enemyUFOsprite.setColor(sf::Color::Red);
@@ -63,6 +67,8 @@ Bullet Enemy::aim(sf::Vector2f position)
 
 bool Enemy::moved(float frametime)
 {
+	if (this == nullptr)
+		return false;
 	//
 	sf::Vector2f position = position_UFO;
 	if (position_UFO.x >= 899)
@@ -99,41 +105,40 @@ void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Enemy::update(float frametime)
 {
-	if (this != nullptr)
+	punched();
+	moved(frametime);
+	switch (level)
 	{
-		punched();
-		moved(frametime);
-		switch (level)
-		{
-		case 0:
-			enemyUFOsprite.setTextureRect(sf::IntRect(107, 122, 96, 95));
-			break; 
-		case 1:
-			enemyUFOsprite.setTextureRect(sf::IntRect(515, 45, 70, 47));
-			break;
-		case 2:
-			enemyUFOsprite.setTextureRect(sf::IntRect(608, 45, 70, 47));
-			//
-			break;
-		default:
-			break;
-		}
+	case 0:
+		enemyUFOsprite.setTextureRect(sf::IntRect(107, 122, 96, 95));
+		break; 
+	case 1:
+		enemyUFOsprite.setTextureRect(sf::IntRect(515, 45, 70, 47));
+		break;
+	case 2:
+		enemyUFOsprite.setTextureRect(sf::IntRect(608, 45, 70, 47));
+		//
+		break;
+	default:
+		break;
 	}
+	
 }
 
 bool Enemy::checkPoint(sf::Vector2f point) {
-	if (this != nullptr)
-	{
-		float ax = position_UFO.x + 40;
-		float ay = position_UFO.y + 40;
+	if (this == nullptr)
+		return false;
 
-		float px = point.x;
-		float py = point.y;
+	float ax = position_UFO.x + 40;
+	float ay = position_UFO.y + 40;
 
-		float sqrDistance = ((ax - point.x)*(ax - point.x)) + ((ay - point.y) * (ay - point.y));
-		float sqrRadius = 25*25;
+	float px = point.x;
+	float py = point.y;
 
-		return (sqrDistance <= sqrRadius);
-	}
-	return false;
+	float sqrDistance = ((ax - point.x)*(ax - point.x)) + ((ay - point.y) * (ay - point.y));
+	float sqrRadius = 25*25;
+
+	return (sqrDistance <= sqrRadius);
+	
+	
 }

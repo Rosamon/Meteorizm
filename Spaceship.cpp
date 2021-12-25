@@ -10,7 +10,7 @@ Spaceship::Spaceship() {
     x = 500; y = 500;//координата появления спрайта
     live = 3;
     sprite.setPosition(x, y); //выводим спрайт в позицию x y , посередине. бесконечно выводим в этой функции, иначе бы наш спрайт стоял на месте
-    speed = 0.8;
+    speed = 1;
     reset();
 }
 
@@ -29,30 +29,30 @@ void Spaceship::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 //    float   height = 1000, width = 1000;
 //
 //
-//    if (x <= 0 || y <= 0 || x + 80 >= width || y + 80 >= height)
-//
-//        // проверяем "направление скорости" ракеты:
-//    {
-//        if (dy > 0)//если мы шли вниз,
-//        {
-//            y = height - 73;//то стопорим координату игрек персонажа. 
-//        }
-//
-//        if (dx > 0)
-//        {
-//            x = width - 45;//если идем вправо
-//        }
-//
-//        if (dy < 0)
-//        {
-//            y = +1;//аналогично с ходьбой вверх. dy<0, значит мы идем вверх
-//        }
-//
-//        if (dx < 0)
-//        {
-//            x = +1;//аналогично идем влево
-//        }
-//    }
+    //if (x <= 0 || y <= 0 || x + 80 >= width || y + 80 >= height)
+
+    //    // проверяем "направление скорости" ракеты:
+    //{
+    //    if (dy > 0)//если мы шли вниз,
+    //    {
+    //        y = height - 73;//то стопорим координату игрек персонажа. 
+    //    }
+
+    //    if (dx > 0)
+    //    {
+    //        x = width - 45;//если идем вправо
+    //    }
+
+    //    if (dy < 0)
+    //    {
+    //        y = +1;//аналогично с ходьбой вверх. dy<0, значит мы идем вверх
+    //    }
+
+    //    if (dx < 0)
+    //    {
+    //        x = +1;//аналогично идем влево
+    //    }
+    //}
 //}
 
 void Spaceship::update(float frametime) {
@@ -82,22 +82,52 @@ void Spaceship::update(float frametime) {
     }
 
     sf::Vector2f position = getPosition();
-    if (position.x < 0 || position.x + 60 > 1000 || position.y < 0 || position.y + 80 > 1000)
+    if (position.x -55 < 0 || position.x + 60 > 1000 || position.y -55< 0 || position.y + 80 > 1000)
     {
-       if (position.x < 0) 
-           position.x = + 10;
+       if (dx < 0)
+           position.x = + 45;
 
      if (position.x + 70 > 1000)
         position.x = 1000 - 70;
 
-    if (position.y < 0)
-        position.y = +10;
+    if (dy < 0)
+        position.y = +55;
 
     if (position.y + 80 > 1000)
         position.y = 1000-80;
    
     setPosition(position);
-    sprite.setPosition(position);
+    sf::Vector2f position2 = sprite.getPosition();
+    if (x-45 <= 0 || y-35 <= 0 || x + 70 >= 1000 || y + 80 >= 1000)
+
+
+            // проверяем "направление скорости" ракеты:
+        {
+            if (dy > 0)//если мы шли вниз,
+            {
+                position2.y = 1000 - 73;//то стопорим координату игрек персонажа. 
+                sprite.setPosition(position2);
+            }
+
+            if (dx > 0)
+            {
+                position2.x = 1000 - 35;//если идем вправо
+                sprite.setPosition(position2);
+            }
+
+            if (dy < 0)
+            {
+                position2.y = +1;//аналогично с ходьбой вверх. dy<0, значит мы идем вверх
+                sprite.setPosition(position2);
+            }
+
+            if (dx < 0)
+            {
+                position2.x = +20;//аналогично идем влево
+                sprite.setPosition(position2);
+            }
+        }
+    else  sprite.setPosition(position2);
     
     }
  
@@ -133,16 +163,16 @@ void Spaceship::onEvent(const sf::Event& event) {
         dir = 3; spee = 1;//направление вверх, см выше
         sprite.setTextureRect(IntRect(238, 38, 45, 73));
         Vector2f opa = getPosition();
-        sprite.setPosition(opa.x - 23, opa.y - 35);
+    /*    sprite.setPosition(opa.x - 23, opa.y - 35);*/
     }
 
     if ((Keyboard::isKeyPressed(Keyboard::Down) || (Keyboard::isKeyPressed(Keyboard::S)))) { 
         dir = 2; spee = 1;//направление вниз, см выше
         sprite.setTextureRect(IntRect(238, 38, 45, 73));
         Vector2f opa = getPosition();
-        if (opa.y <= 1000 - 90) {
+  /*      if (opa.y <= 1000 - 90) {
             sprite.setPosition(opa.x + 23, opa.y + 35);
-        }
+        }*/
     }
 
 }

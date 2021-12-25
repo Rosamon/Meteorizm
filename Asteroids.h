@@ -27,11 +27,13 @@ public:
     //////
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     //////
+    sf::FloatRect getTouchBox();// функция, вовзращающая координаты формы-коробки 
 private:
     int level; // уровень астероида
     bool is_Alive; // состояние астероида
     Vector2f direction; // направление астероида
     Sprite AsterSprite; // спрайт для астероида
+    sf::FloatRect TouchBox;// форма-коробка для обработки столкновения с ракетой
     
 };
 #endif

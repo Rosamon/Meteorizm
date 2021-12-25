@@ -79,7 +79,10 @@ void Spaceship::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 //}
 
 void Spaceship::update(float frametime) {
-
+    if (live == 2)
+        textureBox = IntRect(235, 240, 45, 73);
+    if (live == 1)
+        textureBox = IntRect(39, 275, 45, 73);
     switch (dir)//реализуем поведение в зависимости от направления. (каждая цифра соответствует направлению)
     {
     case 0: dx = spee; dy = 0;   break;//по иксу задаем положительную скорость, по игреку зануляем. получаем, что ракета летит только вправо

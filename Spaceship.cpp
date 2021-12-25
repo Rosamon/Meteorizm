@@ -105,6 +105,8 @@ void Spaceship::update(float frametime) {
 
         move(distance);
         sprite.move(distance);
+        TouchBox.left = getPosition().x + 10;
+        TouchBox.top = getPosition().y + 10;
     }
 
     sf::Vector2f position = getPosition();

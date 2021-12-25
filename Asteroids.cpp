@@ -1,5 +1,4 @@
 #include "Asteroids.h"
-
 Texture AsteroidTexture; // текстура для астероида
 
 Asteroid::Asteroid(int level) : is_Alive(true), level(level) {
@@ -24,6 +23,10 @@ Asteroid::Asteroid(int level) : is_Alive(true), level(level) {
     setPosition(position.x - radius[level], position.y - radius[level]);
     AsterSprite.setPosition(position);
     
+    TouchBox.left = getPosition().x ;
+    TouchBox.top = getPosition().y ;
+    TouchBox.width = 60;
+    TouchBox.height = 60;
 }
 
 
@@ -56,7 +59,9 @@ int Asteroid::getLevel() {
     return level;
 }
 
-
+sf::FloatRect Asteroid::getTouchBox() {
+    return TouchBox;
+}
 void Asteroid::breakDown() {
     level++;
 
@@ -76,6 +81,12 @@ void Asteroid::breakDown() {
     case 2: {
         AsterSprite = Sprite(AsteroidTexture, IntRect(58, 155, 36, 36)); // предсмертный
         AsterSprite.setOrigin(radius[level], radius[level]);
+
+        TouchBox.left = getPosition().x;
+        TouchBox.top = getPosition().y;
+        TouchBox.height = 35;
+        TouchBox.width = 35;
+        
         break;
     }
     };
@@ -88,7 +99,7 @@ void Asteroid::breakDown() {
 void Asteroid::update() {
     if (!is_Alive) return;
 
-    AsterSprite.rotate(3);
+    AsterSprite.rotate(0.5);
 
     float speed[3] = { 0.03f, 0.05f, 0.07f };
     sf::Vector2f distance = direction * speed[level] * 20.0f;// 
@@ -99,10 +110,13 @@ void Asteroid::update() {
     //здесь 1000 - высота окна
     if (position.y > (1000 - radius[level])) {
         is_Alive = false;
-        //delete this;
     }
     setPosition(position);
     AsterSprite.setPosition(position);
+   
+    TouchBox.left = getPosition().x;//
+    TouchBox.top = getPosition().y;//
+    
 }
 
 void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const

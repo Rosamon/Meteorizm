@@ -12,6 +12,10 @@ Spaceship::Spaceship() {
     sprite.setPosition(x, y); //выводим спрайт в позицию x y , посередине. бесконечно выводим в этой функции, иначе бы наш спрайт стоял на месте
     speed = 1;
     reset();
+    TouchBox.left = getPosition().x + 10;
+    TouchBox.top = getPosition().y + 10;
+    TouchBox.width = 35;
+    TouchBox.height = 53;
 }
 
 Spaceship::~Spaceship() {

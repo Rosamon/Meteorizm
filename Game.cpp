@@ -17,8 +17,8 @@ int Game::run() {
     sf::Clock clock;
 
     level.start();
-    bool dedinside = true;
-    while (running && dedinside) {
+    bool isntOver = true;
+    while (running && isntOver) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) { window.close();
@@ -42,15 +42,15 @@ int Game::run() {
         }
 
         window.clear();
-        int buff = my_timer.getElapsedTime().asMilliseconds();// 
-        dedinside = level.update(clock.restart().asMilliseconds(), buff);
-        if (buff >= 6030)
-        {
-            my_timer.restart();// Перезапуск таймера для тарелки
-        }
+        //int buff = my_timer.getElapsedTime().asMilliseconds();// 
+        isntOver = level.update(clock.restart().asMilliseconds());
+        //if (buff >= 6030)
+        //{
+        //    my_timer.restart();// Перезапуск таймера для тарелки
+        //}
         level.show(window);
         window.display();
-        if (!dedinside) {
+        if (!isntOver) {
             window.close();
             window.create(sf::VideoMode(APP_WIDTH, APP_HEIGHT), "GameOver", sf::Style::Close);
             window.setKeyRepeatEnabled(true);

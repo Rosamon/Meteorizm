@@ -1,7 +1,7 @@
 #ifndef _SPACESHIP_HPP_
 #define _SPACESHIP_HPP_
 
-#include <math.h>
+
 #include <SFML/Graphics.hpp>
 
 using namespace sf;
@@ -23,9 +23,11 @@ class Spaceship: public sf::Drawable, public sf::Transformable {
         //void interactionWithMap();
         void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         void onEvent(const sf::Event& event);
-        sf::Vector2f position;
+        Vector2f position;
         bool checkPoint(sf::Vector2f point);
-
+        FloatRect TouchBox;//
+        bool isСollision(sf::FloatRect);//
+        IntRect textureBox;
 
 };
 #endif

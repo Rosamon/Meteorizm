@@ -8,6 +8,7 @@ alive(true)
 		case 3:
 			position_UFO.x = 100;
 			position_UFO.y = 50;
+			direction.x = 1;
 			break;
 		case 2:
 			position_UFO.x = 400;
@@ -16,6 +17,7 @@ alive(true)
 		default:
 			position_UFO.x = 900; // c учетом того что поле в ширину 1000
 			position_UFO.y = 50;
+			direction.x = -1;
 			break;
 	}
 
@@ -102,8 +104,6 @@ void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Enemy::update(float frametime)
 {
-	if (this == nullptr)
-		return;
 	punched();
 	moved(frametime);
 	switch (level)

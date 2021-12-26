@@ -18,9 +18,7 @@ class Spaceship: public sf::Drawable, public sf::Transformable {
         Texture texture;// текстура
         Sprite sprite;// спрайт
         void reset();
-        bool dedinside();
         void update(float frametime);
-        //void interactionWithMap();
         void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         void onEvent(const sf::Event& event);
         Vector2f position;
@@ -28,6 +26,7 @@ class Spaceship: public sf::Drawable, public sf::Transformable {
         FloatRect TouchBox;//
         bool isСollision(sf::FloatRect);//
         IntRect textureBox;
+        bool life();
+};     
 
-};
 #endif

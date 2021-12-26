@@ -5,17 +5,18 @@ Asteroid::Asteroid(int level) : level(level) {
      //скорости и размеры Астероида
      float speed[3] = { 0.03f, 0.05f, 0.07f };
      int radius[3] = { 37.5, 37.5, 18};
+
      is_Alive = true;
+
+     //работа с изображением
      Image AsterImage;
      AsterImage.loadFromFile("images/Kursa4.png");
      AsteroidTexture.loadFromImage(AsterImage);
      AsterSprite = Sprite(AsteroidTexture, IntRect(38, 38, 75, 75)); // целый
-     //int y_buff = rand() % (1000 - radius[level] - 40) + radius[level] + 20;
      AsterSprite.setOrigin(radius[level], radius[level]);
-    
-    //int angle = 270 % 360; // угол в 270 градусов, задаем направление строго вниз
-    //direction = Vector2f(cos(angle * DEG2RAD), sin(angle * DEG2RAD));
+
      direction = sf::Vector2f(0, 1);
+
     int x = radius[level] + rand() % (1000 - radius[level]); // 1000 - предполагаемая ширина окна
     int y = radius[level] + rand() % 100; // 100 - первые сто px сверху окна
 
@@ -50,11 +51,6 @@ bool Asteroid::checkPoint(sf::Vector2f point) {
 }
 
 
-
-//bool Asteroid::isAlive() {
-//    return is_Alive;
-//}
-
 int Asteroid::getLevel() {
     return level;
 }
@@ -69,13 +65,14 @@ void Asteroid::breakDown() {
         is_Alive = false;
         return;
     }
-    //здесь меняем картинки и радиус
+    //здесь меняем картинки, размер формы-коробки и радиус
     int radius[3] = { 37.5, 37.5, 18 };
     switch (level)
     {
     case 1: {
         AsterSprite = Sprite(AsteroidTexture, IntRect(128, 38, 75, 75)); // коцаный
         AsterSprite.setOrigin(radius[level], radius[level]);
+
         break;
     }
     case 2: {
@@ -90,9 +87,6 @@ void Asteroid::breakDown() {
         break;
     }
     };
-
-    //float angle = 90 % 360;
-    //direction = sf::Vector2f(cos(angle * DEG2RAD), sin(angle * DEG2RAD));
     
 }
 
@@ -102,10 +96,11 @@ void Asteroid::update() {
     AsterSprite.rotate(0.5);
 
     float speed[3] = { 0.03f, 0.05f, 0.07f };
-    sf::Vector2f distance = direction * speed[level] * 20.0f;// 
+    sf::Vector2f distance = direction * speed[level] * 20.0f;
     move(distance);
     AsterSprite.move(distance);
     sf::Vector2f position = getPosition();
+
     int radius[3] = { 37.5, 37.5, 18 };
     //здесь 1000 - высота окна
     if (position.y > (1000 - radius[level])) {
@@ -121,5 +116,9 @@ void Asteroid::update() {
 
 void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(AsterSprite);
+    // проверяем на ложное срабатывание
+    if (AsterSprite.getPosition().x != 0) {
+        target.draw(AsterSprite);
+    }
+   
 }

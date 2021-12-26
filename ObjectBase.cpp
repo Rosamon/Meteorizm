@@ -2,7 +2,9 @@
 
 //-----------------------------------------------------------
 // Здесь базовый класс Object
-ObjectBase::ObjectBase() {};
+ObjectBase::ObjectBase() {
+    TouchBox = sf::FloatRect(10,10,36,36);
+};
 ObjectBase::~ObjectBase() {};
 
 
@@ -13,4 +15,8 @@ bool ObjectBase::isAlive() {
 
 int ObjectBase::getLevel() {
     return level;
+}
+
+sf::FloatRect ObjectBase::getTouchBox() {
+    return TouchBox;
 }

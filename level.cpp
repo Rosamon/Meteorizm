@@ -41,6 +41,10 @@ bool Level::update(float frametime) {
     if (UFO != nullptr)
     {
         UFO->update(frametime);
+        if (ship.isСollision(UFO->getTouchBox())) {//Столкновение
+            UFO->punch(true);//
+            Score++;
+        }
     }
     /////////////////
 

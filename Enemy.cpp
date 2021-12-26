@@ -1,9 +1,9 @@
 #pragma once
 #include "Enemy.h"
 // 1, 2, 3
-Enemy::Enemy(int position):
-alive(true)
+Enemy::Enemy(int position)
 {
+	is_Alive = true;
 	switch (position)
 	{
 		case 3:
@@ -24,7 +24,7 @@ alive(true)
 
 	enemyUFOsprite.setPosition(position_UFO);
 	level = 4;
-	
+	TouchBox = sf::FloatRect(position_UFO.x, position_UFO.y, 70, 45);
 	enemytexture.loadFromFile("images\\Kursa4.png");
 	enemyUFOsprite.setTexture(enemytexture);
 	enemyUFOsprite.setTextureRect(sf::IntRect(416, 45, 70, 47));
@@ -50,7 +50,7 @@ void Enemy::punched()
 	}
 	if (level == 0)
 	{
-		alive = false;
+		is_Alive = false;
 	}
 }
 
@@ -94,6 +94,8 @@ bool Enemy::moved(float frametime)
 	}
 	sf::Vector2f distance = direction * 0.1f * frametime;
     enemyUFOsprite.move(distance);
+	TouchBox.left = enemyUFOsprite.getPosition().x;
+	TouchBox.top = enemyUFOsprite.getPosition().y;
     position_UFO += distance;
     return true;
 }

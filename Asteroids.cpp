@@ -1,11 +1,11 @@
 #include "Asteroids.h"
 Texture AsteroidTexture; // текстура для астероида
 
-Asteroid::Asteroid(int level) : is_Alive(true), level(level) {
+Asteroid::Asteroid(int level) : level(level) {
      //скорости и размеры Астероида
      float speed[3] = { 0.03f, 0.05f, 0.07f };
      int radius[3] = { 37.5, 37.5, 18};
-
+     is_Alive = true;
      Image AsterImage;
      AsterImage.loadFromFile("images/Kursa4.png");
      AsteroidTexture.loadFromImage(AsterImage);
@@ -51,9 +51,9 @@ bool Asteroid::checkPoint(sf::Vector2f point) {
 
 
 
-bool Asteroid::isAlive() {
-    return is_Alive;
-}
+//bool Asteroid::isAlive() {
+//    return is_Alive;
+//}
 
 int Asteroid::getLevel() {
     return level;

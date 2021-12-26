@@ -137,7 +137,7 @@ bool Level::update(float frametime) {
         ////////////////     
         ++start_bullets;
         }
-    if (ship.dedinside())
+    if (ship.life())
         return false;
     
     //asteroids.insert(asteroids.end(), new_asteroids.begin(), new_asteroids.end());

@@ -12,7 +12,6 @@ Game::~Game() {
 
 int Game::run() {
     createWindow();
-    sf::Clock my_timer;// для контроля действий тарелки
     Level level;
     sf::Clock clock;
 

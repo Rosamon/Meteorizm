@@ -17,7 +17,6 @@ class Bullet: public sf::Drawable, public sf::Transformable {
         bool isItEnemy() { return isenemy; };
         void update(float frametime);
         void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
     private:
         bool is_alive;
         float remaining_life;

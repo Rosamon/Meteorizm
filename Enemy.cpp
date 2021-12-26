@@ -14,6 +14,7 @@ Enemy::Enemy(int position)
 		case 2:
 			position_UFO.x = 400;
 			position_UFO.y = 50;
+			direction.x = -1;
 			break;
 		default:
 			position_UFO.x = 900; // c учетом того что поле в ширину 1000
@@ -23,7 +24,7 @@ Enemy::Enemy(int position)
 	}
 
 	enemyUFOsprite.setPosition(position_UFO);
-	level = 4;
+	level = 10; // количество попаданий для уничтожения
 	TouchBox = sf::FloatRect(position_UFO.x, position_UFO.y, 70, 45);
 	enemytexture.loadFromFile("images\\Kursa4.png");
 	enemyUFOsprite.setTexture(enemytexture);
@@ -33,7 +34,7 @@ Enemy::Enemy(int position)
 void Enemy::punched()
 {
 	if (this == nullptr)
-		return;
+		return;// если указатель на этот объект пуст, то выход из метода
 	if (ishit)
 	{
 		enemyUFOsprite.setColor(sf::Color::Red);
@@ -52,6 +53,20 @@ void Enemy::punched()
 	{
 		is_Alive = false;
 	}
+	switch (level)
+	{
+	case 0:
+		enemyUFOsprite.setTextureRect(sf::IntRect(107, 122, 96, 95));
+		break;
+	case 1:
+		enemyUFOsprite.setTextureRect(sf::IntRect(515, 45, 70, 47));
+		break;
+	case 2:
+		enemyUFOsprite.setTextureRect(sf::IntRect(608, 45, 70, 47));
+		break;
+	default:
+		break;
+	}
 }
 
 Bullet Enemy::aim(sf::Vector2f position)
@@ -69,7 +84,6 @@ bool Enemy::moved(float frametime)
 {
 	if (this == nullptr)
 		return false;
-	//
 	sf::Vector2f position = position_UFO;
 	if (position_UFO.x >= 899)
 	{
@@ -79,7 +93,7 @@ bool Enemy::moved(float frametime)
 	{
 		direction.x = 1;
 	}
-	if (trunc(position_UFO.x) == 399 || trunc(position_UFO.x) == 400)
+	if (trunc(position_UFO.x) == 499 || trunc(position_UFO.x) == 500)
 	{
 		short buff = 0;
 		buff = rand() % 2;
@@ -94,7 +108,7 @@ bool Enemy::moved(float frametime)
 	}
 	sf::Vector2f distance = direction * 0.1f * frametime;
     enemyUFOsprite.move(distance);
-	TouchBox.left = enemyUFOsprite.getPosition().x;
+	TouchBox.left = enemyUFOsprite.getPosition().x;//движение вместе со спрайтом
 	TouchBox.top = enemyUFOsprite.getPosition().y;
     position_UFO += distance;
     return true;
@@ -108,23 +122,7 @@ void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 void Enemy::update(float frametime)
 {
 	punched();
-	moved(frametime);
-	switch (level)
-	{
-	case 0:
-		enemyUFOsprite.setTextureRect(sf::IntRect(107, 122, 96, 95));
-		break; 
-	case 1:
-		enemyUFOsprite.setTextureRect(sf::IntRect(515, 45, 70, 47));
-		break;
-	case 2:
-		enemyUFOsprite.setTextureRect(sf::IntRect(608, 45, 70, 47));
-		//
-		break;
-	default:
-		break;
-	}
-	
+	moved(frametime);	
 }
 
 bool Enemy::checkPoint(sf::Vector2f point) {
@@ -141,6 +139,4 @@ bool Enemy::checkPoint(sf::Vector2f point) {
 	float sqrRadius = 25*25;
 
 	return (sqrDistance <= sqrRadius);
-	
-	
 }

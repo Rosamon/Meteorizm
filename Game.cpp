@@ -42,13 +42,9 @@ int Game::run() {
         }
 
         window.clear();
-        //int buff = my_timer.getElapsedTime().asMilliseconds();// 
         isntOver = level.update(clock.restart().asMilliseconds());
-        //if (buff >= 6030)
-        //{
-        //    my_timer.restart();// Перезапуск таймера для тарелки
-        //}
         level.show(window);
+
         window.display();
         if (!isntOver) {
             window.close();
@@ -86,7 +82,6 @@ void Game::createGameWindow() {
     window.draw(GamePic);
     while (isMenu)
     {
-
         menuNum = 0;
 
         if (IntRect(100, 300, 150, 360).contains(Mouse::getPosition(window))) { StartSprite.setColor(Color::Green); menuNum = 1; }
@@ -97,8 +92,6 @@ void Game::createGameWindow() {
             if (menuNum == 2) { window.close(); system("exit"); };//åñëè íàæàëè ïåðâóþ êíîïêó, òî âûõîäèì èç ìåíþ 
             if (menuNum == 1) { window.clear(Color::Black); isMenu = false; }
             if (Keyboard::isKeyPressed(sf::Keyboard::Escape)) { window.close(); system("exit"); }
-        
-
         }
 
         window.draw(GamePic);
@@ -107,9 +100,7 @@ void Game::createGameWindow() {
 
         window.display();
     }
-    // Îòðèñîâêà îêíà
-    
-    
+    // Îòðèñîâêà îêíà  
 }
 
 void Game::createWindow() {

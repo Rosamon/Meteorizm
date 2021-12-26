@@ -6,7 +6,8 @@ Spaceship::Spaceship() {
     image.loadFromFile("images\\Kursa4.png" );//запихиваем в image наше изображение вместо File мы передадим то, что пропишем при создании объекта.
     texture.loadFromImage(image);//закидываем наше изображение в текстуру
     sprite.setTexture(texture);//заливаем спрайт текстурой
-    sprite.setTextureRect(IntRect(238, 38, 45, 73));  //Задаем спрайту один прямоугольник для вывода одного корабля. IntRect - приведение типов
+    textureBox = IntRect(238, 38, 45, 73);
+    sprite.setTextureRect(textureBox);  //Задаем спрайту один прямоугольник для вывода одного корабля. IntRect - приведение типов
     x = 500; y = 500;//координата появления спрайта
     live = 3;
     sprite.setPosition(x, y); //выводим спрайт в позицию x y , посередине. бесконечно выводим в этой функции, иначе бы наш спрайт стоял на месте
@@ -28,11 +29,13 @@ bool Spaceship::isСollision(sf::FloatRect rect) {
         {
             setPosition(getPosition().x + 20, getPosition().y + 10);
             sprite.setPosition(sprite.getPosition().x + 20, sprite.getPosition().y + 10);
+            sprite.setColor(sf::Color(191, 150, 150));
         }
         else
         {
             setPosition(getPosition().x - 20, getPosition().y - 10);
             sprite.setPosition(sprite.getPosition().x - 20, sprite.getPosition().y - 10);
+            sprite.setColor(sf::Color(191, 150, 150));
         }
         live--;
         return true;
@@ -48,41 +51,13 @@ void Spaceship::reset() {
 void Spaceship::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(sprite);
 }
-//void Spaceship::interactionWithMap() {
-//    float   height = 1000, width = 1000;
-//
-//
-    //if (x <= 0 || y <= 0 || x + 80 >= width || y + 80 >= height)
 
-    //    // проверяем "направление скорости" ракеты:
-    //{
-    //    if (dy > 0)//если мы шли вниз,
-    //    {
-    //        y = height - 73;//то стопорим координату игрек персонажа. 
-    //    }
-
-    //    if (dx > 0)
-    //    {
-    //        x = width - 45;//если идем вправо
-    //    }
-
-    //    if (dy < 0)
-    //    {
-    //        y = +1;//аналогично с ходьбой вверх. dy<0, значит мы идем вверх
-    //    }
-
-    //    if (dx < 0)
-    //    {
-    //        x = +1;//аналогично идем влево
-    //    }
-    //}
-//}
 
 void Spaceship::update(float frametime) {
-    if (live == 2)
-        textureBox = IntRect(235, 240, 45, 73);
+    /*if (live == 2)
+        textureBox = IntRect(238, 240, 45, 73);
     if (live == 1)
-        textureBox = IntRect(39, 275, 45, 73);
+        textureBox = IntRect(145, 282, 25, 70);*/
     switch (dir)//реализуем поведение в зависимости от направления. (каждая цифра соответствует направлению)
     {
     case 0: dx = spee; dy = 0;   break;//по иксу задаем положительную скорость, по игреку зануляем. получаем, что ракета летит только вправо
@@ -92,16 +67,14 @@ void Spaceship::update(float frametime) {
 
     }
 
-    //x = dx * frametime;//то движение из прошлого урока. наше ускорение на время получаем смещение координат и как следствие движение
-    //y = dy * frametime;//аналогично по игреку
-   /* interactionWithMap();*///вызываем функцию, отвечающую за взаимодействие с картой
+
     spee = 0; //зануляем скорость, чтобы ракета остановилась.
     
     if (dy != 0 ||dx != 0) {
 
         sf::Vector2f distance;
-        distance.x = dx * frametime * speed;
-        distance.y = dy * frametime * speed;
+        distance.x = dx * frametime * speed;// наше ускорение на время получаем смещение координат и как следствие движение
+        distance.y = dy * frametime * speed; //аналогично по игреку
 
         move(distance);
         sprite.move(distance);
@@ -161,46 +134,138 @@ void Spaceship::update(float frametime) {
  
 
 }
-bool Spaceship::dedinside() {
-    //Vector2f ghoul = sprite.getPosition();
-    return(live == 0);
+bool Spaceship::life() {
+
+    return(live <= 0);
 }
 void Spaceship::onEvent(const sf::Event& event) {
 
+    //STRAIGHT POSITION
+
+    if (live == 3) {
         sprite.setTextureRect(IntRect(238, 38, 45, 73));
         Vector2f opa = getPosition();
         sprite.setPosition(opa.x - 23, opa.y - 35);
-  
+    }
+   
+        if (live == 2)
+        {
+            sprite.setTextureRect(IntRect(238, 240, 45, 73));
+            Vector2f opa = getPosition();
+            sprite.setPosition(opa.x - 23, opa.y - 35);
+        }
+   
+            if (live == 1)
+            {
+                sprite.setTextureRect(IntRect(145, 277, 25, 70));
+                Vector2f opa = getPosition();
+                sprite.setPosition(opa.x - 11, opa.y - 35);
+            }
+
+
+
+    //LEFT
     if ((Keyboard::isKeyPressed(Keyboard::Left) || (Keyboard::isKeyPressed(Keyboard::A)))) {
 
         dir = 1; spee = 1;// направление влево
-        sprite.setTextureRect(IntRect(319, 155, 68, 66));
-        Vector2f opa = getPosition();
-        sprite.setPosition(opa);
+
+      
+        if (live == 3) {
+            sprite.setTextureRect(IntRect(319, 155, 68, 66));
+            Vector2f opa = getPosition();
+            sprite.setPosition(opa);
+        }
+      
+            if (live == 2)
+            {
+                sprite.setTextureRect(IntRect(308, 361, 68, 66));
+                Vector2f opa = getPosition();
+                sprite.setPosition(opa);
+            }
+       
+                if (live == 1)
+                {
+                    sprite.setTextureRect(IntRect(38, 454, 54, 54));
+                    Vector2f opa = getPosition();
+                    sprite.setPosition(opa);
+                }
     }
 
+    //RIGHT
 
     if ((Keyboard::isKeyPressed(Keyboard::Right) || (Keyboard::isKeyPressed(Keyboard::D)))) {
-        dir = 0; spee= 1;//направление вправо, см выше
-        sprite.setTextureRect(IntRect(307, 45, 68, 66));
-        Vector2f opa = getPosition();
-        sprite.setPosition(opa.x-47,opa.y);
-    }
+        dir = 0; spee = 1;//направление вправо, см выше
 
+
+
+        if (live == 3) {
+            sprite.setTextureRect(IntRect(307, 45, 68, 66));
+            Vector2f opa = getPosition();
+            sprite.setPosition(opa.x - 47, opa.y);
+        }
+
+        if (live == 2)
+        {
+            sprite.setTextureRect(IntRect(307, 257, 68, 66));
+            Vector2f opa = getPosition();
+            sprite.setPosition(opa.x - 47, opa.y);
+        }
+
+        if (live == 1)
+        {
+            sprite.setTextureRect(IntRect(132, 453, 54, 54));
+            Vector2f opa = getPosition();
+            sprite.setPosition(opa.x - 47, opa.y);
+        }
+    }
+    //UP UP UP
     if ((Keyboard::isKeyPressed(Keyboard::Up) || (Keyboard::isKeyPressed(Keyboard::W)))) {
         dir = 3; spee = 1;//направление вверх, см выше
-        sprite.setTextureRect(IntRect(238, 38, 45, 73));
-        Vector2f opa = getPosition();
-    /*    sprite.setPosition(opa.x - 23, opa.y - 35);*/
+      
+        if (live == 3) {
+            sprite.setTextureRect(IntRect(238, 38, 45, 73));
+            Vector2f opa = getPosition();
+       
+        }
+      
+            if (live == 2)
+            {
+                sprite.setTextureRect(IntRect(238, 240, 45, 73));
+                Vector2f opa = getPosition();
+             
+            }
+         
+                if (live == 1)
+                {
+                    sprite.setTextureRect(IntRect(145, 277, 25, 70));
+                    Vector2f opa = getPosition();
+             
+                }
     }
-
+    //DOWN
     if ((Keyboard::isKeyPressed(Keyboard::Down) || (Keyboard::isKeyPressed(Keyboard::S)))) { 
         dir = 2; spee = 1;//направление вниз, см выше
-        sprite.setTextureRect(IntRect(238, 38, 45, 73));
-        Vector2f opa = getPosition();
-  /*      if (opa.y <= 1000 - 90) {
-            sprite.setPosition(opa.x + 23, opa.y + 35);
-        }*/
+   
+        if (live == 3) {
+            sprite.setTextureRect(IntRect(238, 38, 45, 73));
+            Vector2f opa = getPosition();
+
+        }
+ 
+            if (live == 2)
+            {
+                sprite.setTextureRect(IntRect(238, 240, 45, 73));
+                Vector2f opa = getPosition();
+
+            }
+         
+                if (live == 1)
+                {
+                    sprite.setTextureRect(IntRect(145, 277, 25, 70));
+                    Vector2f opa = getPosition();
+
+                }
+
     }
 
 }
@@ -215,6 +280,7 @@ bool Spaceship::checkPoint(sf::Vector2f point) {
 
         if ((px >= ax && px <= ax + 45 && py >= ay && py <= ay + 75)) {
             live--;
+            sprite.setColor(sf::Color(191,150,150));
             return (true);
         }
         else

@@ -13,7 +13,7 @@ class Level {
         Level();
         ~Level();
         void onEvent(const sf::Event& event);
-        bool update(float frametime, int);
+        bool update(float frametime);
         void show(sf::RenderTarget& target);
         void start();
 
@@ -22,6 +22,11 @@ class Level {
         std::vector<Bullet> bullets;
         std::vector<Asteroid> asteroids;
         Enemy* UFO;
+        float ShipTimer, UFOAimTimer, UFOSpawnTimer, AsteroidSpawnTimer = 0;
+        Font font;
+        Text text;
+        int Score;
+
 };
 
 #endif

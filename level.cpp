@@ -1,57 +1,57 @@
 #include "Level.h"
 #include <sstream>
 Level::Level() {
-    font.loadFromFile("images\\CyrilicOld.ttf");
-    text.setFont(font);
-    text.setCharacterSize(24);
-    text.setStyle(sf::Text::Bold | sf::Text::Underlined);
-    text.setPosition(20,20);
+    font.loadFromFile("images\\CyrilicOld.ttf");// загружаем шрифт
+    text.setFont(font);// ставим шрифт
+    //text.setColor(Color::Red);//покрасили текст в красный. если убрать эту строку, то по умолчанию он белый
+    text.setCharacterSize(24); //размер шрифта
+    text.setStyle(sf::Text::Bold | sf::Text::Underlined);//стиль текста
+    text.setPosition(20,20);//позиция текста
 
-    Score = 0;
+    Score = 0;//обнуляем счет
 
-    for (int i=0; i < 3; i++) {
-        Asteroid a(0);
-        asteroids.push_back(a);
+    for (int i=0; i < 3; i++) {//Создание 3 астероидов
+        Asteroid a(0);//
+        asteroids.push_back(a);//записываем его в вектор
     }
 }
 
 Level::~Level() {
 }
 
-void Level::onEvent(const sf::Event& event) {
+void Level::onEvent(const sf::Event& event) {//Обработка событий корабля
     ship.onEvent(event);
-}
 
-bool Level::update(float frametime) {
+    
+}
+bool Level::update(float frametime) {//Обновление картинок
     ship.update(frametime);
     
-    ShipTimer += frametime;
-    UFOAimTimer += frametime;
-    UFOSpawnTimer += frametime;
-    AsteroidSpawnTimer += frametime;
-    //до сюда обновление таймеров
-    if (ShipTimer > 300)
+    ShipTimer += frametime;//
+    UFOAimTimer += frametime;//
+    UFOSpawnTimer += frametime;//
+    AsteroidSpawnTimer += frametime;//
+
+    if (ShipTimer > 300)//добавление пули в вектор
     {
         Bullet bullet(ship.getPosition(), ship.getRotation(), false);
         bullets.push_back(bullet);
         ShipTimer = 0;
     }
-    //Работа класса Spaceship до сюда
-    if (UFO != nullptr)
+    if (UFO != nullptr)//Рома писал
     {
         UFO->update(frametime);
-        if (ship.isСollision(UFO->getTouchBox())) {//Столкновение
-            UFO->punch(true);//
-            Score++;
-        }
     }
+    /////////////////
+
+    //-----------------Рома
     if (UFOAimTimer > 500 && UFO != nullptr && UFO->isAlive())
     {
         bullets.push_back(UFO->aim(ship.getPosition()));
 
         UFOAimTimer = 0;
     }
-    if ((UFOSpawnTimer > 20000) && UFO == nullptr)
+    if ((UFOSpawnTimer > 30000) && UFO == nullptr)
     {
         UFO = new Enemy((rand() % 3 + 1));  
         UFOSpawnTimer = 0;
@@ -59,106 +59,105 @@ bool Level::update(float frametime) {
     if (UFO != nullptr && !UFO->isAlive())
     {
         Score += 5;
-        UFOSpawnTimer = 0;
         delete UFO;
         UFO = nullptr;
     }
-    //Работа класса enemy до сюда
-    if (AsteroidSpawnTimer > 1500)
+    //-------------------------Конец Роме!
+    if (AsteroidSpawnTimer > 1500)//Генерация астероидов
     {
         Asteroid a(0);///
         asteroids.push_back(a);
         AsteroidSpawnTimer = 0;
     }
-    
-    
-    std::vector<Bullet>::iterator start_bullets = bullets.begin();
+    //Работа класса enemy
+    std::vector<Bullet>::iterator start_bullets = bullets.begin();//Обновление пули, переход к следующей
     while (start_bullets != bullets.end()) {
         if (start_bullets->isAlive()) {
             start_bullets->update(frametime);
-            ++start_bullets;
+            ++start_bullets;//переход к следующей пули 
         } else
-            start_bullets = bullets.erase(start_bullets);
+            start_bullets = bullets.erase(start_bullets);//удаление пули с экрана
     }
-    //выше движение пуль и их удаление
-    std::vector<Asteroid>::iterator start_asteroids = asteroids.begin();
+
+    std::vector<Asteroid>::iterator start_asteroids = asteroids.begin();//Обновление астероида, переход к следующему
     while (start_asteroids != asteroids.end()) {
         if (start_asteroids->isAlive()) {
             if (ship.isСollision(start_asteroids->getTouchBox())) {//Столкновение
-                start_asteroids->breakDown();
-                Score++;
+                start_asteroids->breakDown();//разрушение астероида
+                Score++;//добавление очков 
             }
-            start_asteroids->update();
-            ++start_asteroids;
+            start_asteroids->update();//если астероид живой, то обновляем
+            ++start_asteroids;//переход к следующему астероиду
         } else
-            start_asteroids = asteroids.erase(start_asteroids);
+            start_asteroids = asteroids.erase(start_asteroids);//удаление астероида с экрана
     }
-    //выше проверка на столкновение коробля с астероидами
+
     start_asteroids = asteroids.begin();
+
     while (start_asteroids != asteroids.end()) {
         start_bullets = bullets.begin();
-        while (start_bullets != bullets.end()) {
-            if (!start_bullets->isAlive()) {
+        while (start_bullets != bullets.end()) {//Проходимся по вектору всех пуль и проверяем их + их координаты
+            if (!start_bullets->isAlive()) {//если пуля есть, то переходим к след
                 ++start_bullets;
-                continue;//если пуля стерта, то пропустить ее
+                continue;
             }
-            if (start_asteroids->checkPoint(start_bullets->getPosition())){
-                start_bullets->kill();
-                start_asteroids->breakDown();
-                if(!start_bullets->isItEnemy())
+            if (start_asteroids->checkPoint(start_bullets->getPosition())){//Если позиция пули и астероида =
+                start_bullets->kill();//удаляем пулю
+                start_asteroids->breakDown();//Ломаем астероид
+                if(!start_bullets->isItEnemy())//если пуля попала в астероид, то + очки
                 Score++;
                 break;
             }
-            ++start_bullets;
+            ++start_bullets;//Следующая пуля
         }
-        ++start_asteroids;
+        ++start_asteroids;//Следующий астероид
     }
-    //выше проверка пересечений пуль и астероидов
     start_bullets = bullets.begin();
+////////////////////////////Рома
     while (start_bullets != bullets.end()) {
-        if (!start_bullets->isAlive() || start_bullets->isItEnemy()) {
-            if (ship.checkPoint(start_bullets->getPosition()))
+        if (!start_bullets->isAlive() || start_bullets->isItEnemy()) {//если пуля мертва или пуля противника, то мы ее убиваем
             {
-                start_bullets->kill(); 
+                start_bullets->kill();
+                
             }
             ++start_bullets;
             continue;
         }
-        //проверка на принодлежность пуль к врагу и на их пересечение с коаблем
-        if (UFO != nullptr && UFO->checkPoint(start_bullets->getPosition()))
+        if (UFO != nullptr && UFO->checkPoint(start_bullets->getPosition()))//сравнение координат пули и нло
         {
-            UFO->punch(true);
+            UFO->punch(true);//удар прошелся по нло
             start_bullets->kill();
         }
-        // Взаимодействие с тарелкой    
+        // Взаимодействие с тарелкой   
         ++start_bullets;
         }
-    if (ship.life())
+    if (ship.dedinside())//если корабль мертв,то прекращаем обновлять картинки
         return false;
     
+    //asteroids.insert(asteroids.end(), new_asteroids.begin(), new_asteroids.end());
     return true;
 }
-
-void Level::show(sf::RenderTarget& target) {
+//////////////////////////*it адрес эл вектора
+void Level::show(sf::RenderTarget& target) {//Показ объекта
     
     for(std::vector<Bullet>::iterator it = bullets.begin(); it != bullets.end(); ++it)
-        target.draw(*it);
+        target.draw(*it);//Отрисовка пуль
 
-    target.draw(ship);
+    target.draw(ship);//Отрисовка корабля
 
     for(std::vector<Asteroid>::iterator it = asteroids.begin(); it != asteroids.end(); ++it)
-        target.draw(*it);
+        target.draw(*it);//Отрисовка астероидов
 
-    if (UFO != nullptr && UFO->isAlive())
+    if (UFO != nullptr && UFO->isAlive())//еси нло существует и жива
     {
         sf::RenderStates states;
-        UFO->draw(target, states);
+        UFO->draw(target, states);//рисуем нло
     }
     
-    std::ostringstream playerScoreString; // объявили переменную
-    playerScoreString << Score;
-    text.setString("Score: " + playerScoreString.str());
-    target.draw(text);
+    std::ostringstream playerScoreString;    // объявили переменную очки игрока
+    playerScoreString << Score;// Очки игрока
+    text.setString("Score: " + playerScoreString.str());//вывод очков
+    target.draw(text);//Отрисовка текста слева сверху экрана
     
 }
 
